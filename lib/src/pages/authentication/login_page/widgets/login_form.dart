@@ -26,6 +26,7 @@ class LoginForm extends StatelessWidget {
             controller: emailTextController,
             hintText: "Adresse mail",
             labelText: "",
+            inputType: TextInputType.emailAddress,
             validator: (value) {
               if (value.isEmpty) {
                 return "Vous devez rentrer une adresse";

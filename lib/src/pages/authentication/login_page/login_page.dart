@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:adopte_un_matou/src/pages/login_page/widgets/login_form.dart';
+import 'package:adopte_un_matou/src/pages/authentication/login_page/widgets/login_form.dart';
 import 'package:adopte_un_matou/src/shared/widgets/am_button.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:flutter/material.dart';

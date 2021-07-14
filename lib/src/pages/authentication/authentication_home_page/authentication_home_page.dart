@@ -1,4 +1,5 @@
-import 'package:adopte_un_matou/src/pages/login_page/login_page.dart';
+import 'package:adopte_un_matou/src/pages/authentication/login_page/login_page.dart';
+import 'package:adopte_un_matou/src/pages/authentication/register_page/register_page.dart';
 import 'package:adopte_un_matou/src/shared/widgets/am_button.dart';
 import 'package:adopte_un_matou/src/utils/colors.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
@@ -88,7 +89,11 @@ class AuthenticationHomePage extends StatelessWidget {
   }
 
   void _onRegisterClicked(BuildContext context) {
-
+    Navigator.of(context).push<void>(
+      MaterialPageRoute(
+        builder: (context) => RegisterPage()
+      )
+    );
   }
 
   Future _onLoginclicked(BuildContext context) async {
