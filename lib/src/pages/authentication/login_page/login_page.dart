@@ -22,6 +22,12 @@ class _LoginPageState extends State<LoginPage> {
     final int catNumber = Random().nextInt(6) + 1;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black87),
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return Row(
@@ -51,11 +57,6 @@ class _LoginPageState extends State<LoginPage> {
                           text: "Se connecter",
                           onPressed: () {}
                         ),
-                        const SizedBox(height: 10,),
-                        AmButton(
-                          text: "Créer un compte",
-                          onPressed: () {}
-                        )
                       ],
                     ),
                   ),

@@ -32,6 +32,12 @@ class _RegisterPageState extends State<RegisterPage> {
     final int catNumber = Random().nextInt(6) + 1;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black87),
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return Row(
@@ -70,11 +76,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           AmButton(
                             text: "Créer un compte",
                             onPressed: _onRegisterClicked
-                          ),
-                          const SizedBox(height: 10,),
-                          AmButton(
-                            text: "Se connecter",
-                            onPressed: () {}
                           ),
                         }
                       ],
