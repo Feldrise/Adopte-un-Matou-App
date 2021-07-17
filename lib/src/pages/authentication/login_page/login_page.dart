@@ -1,9 +1,15 @@
 import 'dart:math';
 
+import 'package:adopte_un_matou/models/user.dart';
+import 'package:adopte_un_matou/services/authentication_service.dart';
 import 'package:adopte_un_matou/src/pages/authentication/login_page/widgets/login_form.dart';
+import 'package:adopte_un_matou/src/providers/user_store.dart';
 import 'package:adopte_un_matou/src/shared/widgets/am_button.dart';
+import 'package:adopte_un_matou/src/shared/widgets/general/am_status_message.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -16,6 +22,9 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
+
+  bool _isLoading = false;
+  String _errorMessage = "";
 
   @override
   Widget build(BuildContext context) {
@@ -41,22 +50,31 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        if (_errorMessage.isNotEmpty) 
+                          AmStatusMessage(
+                            title: "Erreurs lors de la connexion",
+                            message: _errorMessage,
+                          ), 
                         ConstrainedBox(
                           constraints: const BoxConstraints(maxHeight: 200.0),
                           child: Image.asset("assets/logo.png",)
                         ),
                         const Center(child: Text("Bienvenue sur Adopte un Matou")),
                         const SizedBox(height: 51,),
-                        LoginForm(
-                          formKey: _loginFormKey,
-                          emailTextController: _emailTextController,
-                          passwordTextController: _passwordTextController,
-                        ),
-                        const SizedBox(height: 51,),
-                        AmButton(
-                          text: "Se connecter",
-                          onPressed: () {}
-                        ),
+                        if (_isLoading)
+                          const Center(child: CircularProgressIndicator(),)
+                        else ...{
+                          LoginForm(
+                            formKey: _loginFormKey,
+                            emailTextController: _emailTextController,
+                            passwordTextController: _passwordTextController,
+                          ),
+                          const SizedBox(height: 51,),
+                          AmButton(
+                            text: "Se connecter",
+                            onPressed: _onLoginClicked
+                          )
+                        }
                       ],
                     ),
                   ),
@@ -74,5 +92,38 @@ class _LoginPageState extends State<LoginPage> {
         },
       ),
     );
+  }
+
+  Future _onLoginClicked() async {
+    if (!_loginFormKey.currentState!.validate()) {
+      return;
+    }
+
+    try {
+      setState(() {
+        _isLoading = true;
+        _errorMessage = "";
+      });
+
+      final User loggedUser = await AuthenticationService.instance.login(_emailTextController.text, _passwordTextController.text);
+
+      Provider.of<UserStore>(context, listen: false).loginUser(loggedUser);
+      Navigator.of(context).pop();
+    } 
+    on PlatformException catch(e) {
+      setState(() {
+        _isLoading = false;
+        _errorMessage = "Impossible de se connecter : ${e.code} ; ${e.message}";
+        _passwordTextController.text = "";
+      });
+    }
+    on Exception catch(e) {
+      setState(() {
+        _isLoading = false;
+        _errorMessage = "Une erreur inconnue s'est produite : $e";
+        _passwordTextController.text = "";
+      });
+    }
+
   }
 }
