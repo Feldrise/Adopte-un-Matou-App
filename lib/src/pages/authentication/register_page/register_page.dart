@@ -47,38 +47,43 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Center(
                   child: ConstrainedBox(
                     constraints: constraints.maxWidth >= ScreenUtils.instance.breakpointPC ? const BoxConstraints(maxWidth: 350) : const BoxConstraints(),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        if (_errorMessage.isNotEmpty) 
-                          AmStatusMessage(
-                            title: "Erreurs lors de l'inscription",
-                            message: _errorMessage,
-                          ), 
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(maxHeight: 200.0),
-                          child: Image.asset("assets/logo.png",)
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: ScreenUtils.instance.horizontalPadding),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            if (_errorMessage.isNotEmpty) 
+                              AmStatusMessage(
+                                title: "Erreurs lors de l'inscription",
+                                message: _errorMessage,
+                              ), 
+                            ConstrainedBox(
+                              constraints: const BoxConstraints(maxHeight: 200.0),
+                              child: Image.asset("assets/logo.png",)
+                            ),
+                            const Center(child: Text("Bienvenue sur Adopte un Matou")),
+                            const SizedBox(height: 51,),
+                            if (_isLoading) 
+                              const Center(child: CircularProgressIndicator(),)
+                            else ...{
+                              RegisterForm(
+                                formKey: _registerFormKey,
+                                firstNameController: _firstNameController,
+                                lastNameController: _lastNameController,
+                                emailTextController: _emailTextController,
+                                passwordTextController: _passwordTextController,
+                              ),
+                              const SizedBox(height: 51,),
+                              AmButton(
+                                text: "Créer un compte",
+                                onPressed: _onRegisterClicked
+                              ),
+                            }
+                          ],
                         ),
-                        const Center(child: Text("Bienvenue sur Adopte un Matou")),
-                        const SizedBox(height: 51,),
-                        if (_isLoading) 
-                          const Center(child: CircularProgressIndicator(),)
-                        else ...{
-                          RegisterForm(
-                            formKey: _registerFormKey,
-                            firstNameController: _firstNameController,
-                            lastNameController: _lastNameController,
-                            emailTextController: _emailTextController,
-                            passwordTextController: _passwordTextController,
-                          ),
-                          const SizedBox(height: 51,),
-                          AmButton(
-                            text: "Créer un compte",
-                            onPressed: _onRegisterClicked
-                          ),
-                        }
-                      ],
+                      ),
                     ),
                   ),
                 ),
