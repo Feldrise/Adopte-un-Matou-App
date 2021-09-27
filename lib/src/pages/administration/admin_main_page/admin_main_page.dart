@@ -1,4 +1,5 @@
 import 'package:adopte_un_matou/models/page_item.dart';
+import 'package:adopte_un_matou/presentation/a_u_m_icons_icons.dart';
 import 'package:adopte_un_matou/src/pages/administration/adoption_management_page/adoption_management_page.dart';
 import 'package:adopte_un_matou/src/pages/dashboard_page/dashboard_page.dart';
 import 'package:adopte_un_matou/src/pages/main_page/main_page.dart';
@@ -36,7 +37,7 @@ class AdminMainPage extends StatelessWidget {
     PageItem(
       index: 1,
       title: "Gérer les chats à l'adoption",
-      icon: Icons.catching_pokemon
+      icon: AUMIcons.cat
     )
   ];
 

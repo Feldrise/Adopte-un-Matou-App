@@ -99,7 +99,7 @@ class MenuDrawer extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: Icon(item.icon, size: 20, color: isActive ? colorWhite : colorBlack),
+              child: Icon(item.icon, size: 24, color: isActive ? colorWhite : colorBlack),
             ),
             // We don't show the text when it's minimified
             if (!isMinimified) ...{
