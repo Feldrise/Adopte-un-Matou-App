@@ -6,6 +6,7 @@ import 'package:adopte_un_matou/src/utils/app_manager.dart';
 import 'package:adopte_un_matou/src/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -36,6 +37,16 @@ class MyApp extends StatelessWidget {
               titleTextStyle: TextStyle(color: colorBlack, fontSize: 24)
             ),
 
+
+            textTheme: GoogleFonts.ralewayTextTheme(),
+            // textTheme: TextTheme(
+            //   headline1: GoogleFonts.raleway(fontSize: 36, fontWeight: FontWeight.bold, color: const Color(0xff0a57a5)),
+            //   headline2: GoogleFonts.raleway(fontSize: 24, fontWeight: FontWeight.bold, color: const Color(0xff575757)),
+            //   headline3: GoogleFonts.raleway(fontSize: 18, fontWeight: FontWeight.bold, color: const Color(0xff575757)),
+            //   headline4: GoogleFonts.raleway(fontSize: 16, fontWeight: FontWeight.w300, color: const Color(0xff575757)),
+            //   bodyText2: GoogleFonts.raleway(fontSize: 14, fontWeight: FontWeight.w300, color: const Color(0xff575757)),
+            //   button: GoogleFonts.raleway(fontSize: 18, color: const Color(0xfffffaf6))
+            // ),
 
             visualDensity: VisualDensity.standard
           ),

@@ -24,6 +24,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_feather_icons: ^2.0.0+1
+  google_fonts: ^2.1.0
   http: ^0.13.3
   provider: ^5.0.0
   shared_preferences: ^2.0.6
@@ -56,9 +58,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family:  AUMIcons
+    - family: AUMIcons
       fonts:
-       - asset: fonts/AUMIcons.ttf
+        - asset: fonts/AUMIcons.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:
