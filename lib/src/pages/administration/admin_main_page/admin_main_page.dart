@@ -15,6 +15,8 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 enum AdminPages { dashboard, adoption, adoptedCat, applications, users, documents, profile }
 
 class AdminMainPage extends StatelessWidget {
+  AdminMainPage({Key? key}) : super(key: key);
+
   final GlobalKey<MainPageState> mainPageKey = GlobalKey<MainPageState>();
 
   @override

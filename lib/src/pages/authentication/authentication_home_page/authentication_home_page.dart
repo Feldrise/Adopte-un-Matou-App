@@ -7,6 +7,8 @@ import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 
 class AuthenticationHomePage extends StatefulWidget {
+  const AuthenticationHomePage({Key? key}) : super(key: key);
+
   @override
   _AuthenticationHomePageState createState() => _AuthenticationHomePageState();
 }
@@ -107,7 +109,7 @@ class _AuthenticationHomePageState extends State<AuthenticationHomePage> {
   Future _onRegisterClicked(BuildContext context) async {
     final bool success = await Navigator.of(context).push<bool>(
       MaterialPageRoute(
-        builder: (context) => RegisterPage()
+        builder: (context) => const RegisterPage()
       )
     ) ?? false;
 
@@ -121,7 +123,7 @@ class _AuthenticationHomePageState extends State<AuthenticationHomePage> {
   Future _onLoginclicked(BuildContext context) async {
     Navigator.of(context).push<void>(
       MaterialPageRoute(
-        builder: (context) => LoginPage()
+        builder: (context) => const LoginPage()
       )
     );
   }
