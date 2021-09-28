@@ -4,6 +4,7 @@ import 'package:adopte_un_matou/src/pages/authentication/authentication_home_pag
 import 'package:adopte_un_matou/src/providers/user_store.dart';
 import 'package:adopte_un_matou/src/utils/app_manager.dart';
 import 'package:adopte_un_matou/src/utils/colors.dart';
+import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -54,6 +55,8 @@ class MyApp extends StatelessWidget {
             future: Provider.of<UserStore>(context).loggedUser,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
+                ScreenUtils.instance.setValues(context);
+
                 if (!snapshot.hasData) {
                   return AuthenticationHomePage();
                 }

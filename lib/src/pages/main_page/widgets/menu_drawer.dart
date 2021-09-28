@@ -2,6 +2,8 @@ import 'package:adopte_un_matou/models/page_item.dart';
 import 'package:adopte_un_matou/src/providers/user_store.dart';
 import 'package:adopte_un_matou/src/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class MenuDrawer extends StatelessWidget {
@@ -89,7 +91,7 @@ class MenuDrawer extends StatelessWidget {
 
   Widget _buildPageItem(PageItem item, {required bool isActive}) {
     return DefaultTextStyle(
-      style: TextStyle(color: isActive ? colorWhite : colorBlack),
+      style: GoogleFonts.raleway(color: isActive ? colorWhite : colorBlack),
       child: Container(
         decoration: BoxDecoration(
           color: isActive ? colorPrimary : colorWhite,
@@ -125,7 +127,7 @@ class MenuDrawer extends StatelessWidget {
         child: Row(
           children: [
             const Expanded(
-              child: Icon(Icons.logout, size: 20),
+              child: Icon(FeatherIcons.logOut, size: 20),
             ),
             // We don't show the text when it's minimified
             if (!isMinimified) ...{

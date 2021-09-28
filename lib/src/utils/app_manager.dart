@@ -9,13 +9,24 @@ class AppManager {
   final GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
   final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
 
+  final GlobalKey<NavigatorState> profileKey = GlobalKey<NavigatorState>();
+
   final GlobalKey<NavigatorState> dashboardKey = GlobalKey<NavigatorState>();
 
   final GlobalKey<NavigatorState> adoptionManagementKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> adoptedKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> applicationsKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> usersKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> documentsKey = GlobalKey<NavigatorState>();
 
   // Because we are calling this from the main widget we have to check
   // nested navigators status.
   Future<bool?> showCloseAppConfirmation(BuildContext context) {
+    if (profileKey.currentState != null && profileKey.currentState!.canPop()) {
+      profileKey.currentState!.pop();
+      return Future.value(false);
+    }
+
     if (dashboardKey.currentState != null && dashboardKey.currentState!.canPop()) {
       dashboardKey.currentState!.pop();
       return Future.value(false);
@@ -23,6 +34,21 @@ class AppManager {
 
     if (adoptionManagementKey.currentState != null && adoptionManagementKey.currentState!.canPop()) {
       adoptionManagementKey.currentState!.pop();
+      return Future.value(false);
+    }
+
+    if (adoptedKey.currentState != null && adoptedKey.currentState!.canPop()) {
+      adoptedKey.currentState!.pop();
+      return Future.value(false);
+    }
+
+    if (usersKey.currentState != null && usersKey.currentState!.canPop()) {
+      adoptedKey.currentState!.pop();
+      return Future.value(false);
+    }
+
+    if (documentsKey.currentState != null && documentsKey.currentState!.canPop()) {
+      documentsKey.currentState!.pop();
       return Future.value(false);
     }
 

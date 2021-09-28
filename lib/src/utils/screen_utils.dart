@@ -16,12 +16,12 @@ class ScreenUtils {
     final width = MediaQuery.of(context).size.width;
 
     if (width > breakpointPC) {
-      horizontalPadding = 32;
+      horizontalPadding = 50;
       buttonHorizontalPadding = 51;
       buttonVerticalPadding = 21;
     }
     else if (width > breakpointTablet) {
-      horizontalPadding = 24;
+      horizontalPadding = 30;
       buttonHorizontalPadding = 42;
       buttonVerticalPadding = 21;
     }

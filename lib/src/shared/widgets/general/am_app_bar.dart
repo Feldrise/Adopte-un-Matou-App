@@ -1,6 +1,8 @@
 
 import 'package:adopte_un_matou/src/utils/colors.dart';
+import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AmAppBar extends StatelessWidget implements PreferredSizeWidget {
   const AmAppBar({
@@ -29,32 +31,35 @@ class AmAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: backgroundColor,
-      title: Row(
-        // mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (showMinimifier && onMinimified != null) 
-            SizedBox(
-              width: 48,
-              child: Center(
-                child: IconButton(
-                  icon: const Icon(Icons.menu),
-                  onPressed: onMinimified,
-                ),
-              ),
-            ),
-            if (title is Text)
-              DefaultTextStyle(
-                style: const TextStyle(color: colorBlack, fontSize: 24),
-                child: Flexible(
-                  child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: title
+      title: Padding(
+        padding: EdgeInsets.symmetric(horizontal: ScreenUtils.instance.horizontalPadding - 16, vertical: 32),
+        child: Row(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (showMinimifier && onMinimified != null) 
+              // SizedBox(
+              //   width: 48,
+              //   child: Center(
+              //     child: IconButton(
+              //       icon: const Icon(Icons.menu),
+              //       onPressed: onMinimified,
+              //     ),
+              //   ),
+              // ),
+              if (title is Text)
+                DefaultTextStyle(
+                  style: GoogleFonts.raleway(color: colorBlack, fontSize: 35),
+                  child: Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: title
+                    ),
                   ),
-                ),
-              )
-            else
-              title 
-        ],
+                )
+              else
+                title 
+          ],
+        ),
       ),
       actions: actions,
     );
