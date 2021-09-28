@@ -8,7 +8,6 @@ import 'package:adopte_un_matou/src/pages/administration/users_page/users_page.d
 import 'package:adopte_un_matou/src/pages/dashboard_page/dashboard_page.dart';
 import 'package:adopte_un_matou/src/pages/main_page/main_page.dart';
 import 'package:adopte_un_matou/src/pages/profile_page/profile_page.dart';
-import 'package:adopte_un_matou/src/utils/app_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
@@ -60,74 +59,18 @@ class AdminMainPage extends StatelessWidget {
     };
 
     final List<Widget> pages = [
-      ClipRect(
-        child: Navigator(
-          key: AppManager.instance.dashboardKey,
-          onGenerateRoute: (route) => MaterialPageRoute<dynamic>(
-            settings: route,
-            builder: (context) => DashboardPage(
-              pageItems: pageItems,
-              onPageChanged: (pageItem) {
-                mainPageKey.currentState!.selectPage(pageItem);
-              },
-            )
-          ),
-        ),
+      DashboardPage(
+        pageItems: pageItems,
+        onPageChanged: (pageItem) {
+          mainPageKey.currentState!.selectPage(pageItem);
+        },
       ),
-      ClipRect(
-        child: Navigator(
-          key: AppManager.instance.adoptionManagementKey,
-          onGenerateRoute: (route) => MaterialPageRoute<dynamic>(
-            settings: route,
-            builder: (context) => const AdoptionManagementPage()
-          ),
-        ),
-      ),
-      ClipRect(
-        child: Navigator(
-          key: AppManager.instance.adoptedKey,
-          onGenerateRoute: (route) => MaterialPageRoute<dynamic>(
-            settings: route,
-            builder: (context) => const AdoptedCatsPage()
-          ),
-        ),
-      ),
-      ClipRect(
-        child: Navigator(
-          key: AppManager.instance.applicationsKey,
-          onGenerateRoute: (route) => MaterialPageRoute<dynamic>(
-            settings: route,
-            builder: (context) => const ApplicationsPage()
-          ),
-        ),
-      ),
-      ClipRect(
-        child: Navigator(
-          key: AppManager.instance.usersKey,
-          onGenerateRoute: (route) => MaterialPageRoute<dynamic>(
-            settings: route,
-            builder: (context) => const UsersPage()
-          ),
-        ),
-      ),
-      ClipRect(
-        child: Navigator(
-          key: AppManager.instance.documentsKey,
-          onGenerateRoute: (route) => MaterialPageRoute<dynamic>(
-            settings: route,
-            builder: (context) => const DocumentsPage()
-          ),
-        ),
-      ),
-      ClipRect(
-        child: Navigator(
-          key: AppManager.instance.profileKey,
-          onGenerateRoute: (route) => MaterialPageRoute<dynamic>(
-            settings: route,
-            builder: (context) => const ProfilePage()
-          ),
-        ),
-      ),
+      const AdoptionManagementPage(),
+      const AdoptedCatsPage(),
+      const ApplicationsPage(),
+      const UsersPage(),
+      const DocumentsPage(),
+      const ProfilePage(),
     ];
 
     return MainPage(

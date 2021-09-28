@@ -1,5 +1,6 @@
 import 'package:adopte_un_matou/models/page_item.dart';
 import 'package:adopte_un_matou/src/pages/administration/admin_main_page/admin_main_page.dart';
+import 'package:adopte_un_matou/src/pages/dashboard_page/manage_adoptions_page/manage_adoptions_page.dart';
 import 'package:adopte_un_matou/src/pages/dashboard_page/widgets/dashboard_card.dart';
 import 'package:adopte_un_matou/src/providers/user_store.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
@@ -32,7 +33,13 @@ class DashboardPage extends StatelessWidget {
             DashboardCard(
               text: "Gérer les adoptions",
               catImage: "cat7", 
-              onTap: () {},
+              onTap: () async {
+                await Navigator.of(context).push(
+                  MaterialPageRoute( 
+                    builder: (context) => ManageAdoptionsPage(pageItems: pageItems, onPageChanged: onPageChanged)
+                  )
+                );
+              },
             ),
             DashboardCard(
               text: "Gérer les utilisateurs",

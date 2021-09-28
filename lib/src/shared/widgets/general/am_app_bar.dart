@@ -29,23 +29,15 @@ class AmAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double horizontalPadding = Navigator.of(context).canPop() ? 0 : ScreenUtils.instance.horizontalPadding - 16;
+
     return AppBar(
       backgroundColor: backgroundColor,
       title: Padding(
-        padding: EdgeInsets.symmetric(horizontal: ScreenUtils.instance.horizontalPadding - 16, vertical: 32),
+        padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 32),
         child: Row(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (showMinimifier && onMinimified != null) 
-              // SizedBox(
-              //   width: 48,
-              //   child: Center(
-              //     child: IconButton(
-              //       icon: const Icon(Icons.menu),
-              //       onPressed: onMinimified,
-              //     ),
-              //   ),
-              // ),
               if (title is Text)
                 DefaultTextStyle(
                   style: GoogleFonts.raleway(color: colorBlack, fontSize: 35),

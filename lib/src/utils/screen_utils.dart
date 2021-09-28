@@ -5,7 +5,7 @@ class ScreenUtils {
 
   static final ScreenUtils instance = ScreenUtils._privateConstructor();
 
-  double horizontalPadding = 15;
+  double horizontalPadding = 16;
   double buttonHorizontalPadding = 36;
   double buttonVerticalPadding = 20;
 

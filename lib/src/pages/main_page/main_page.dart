@@ -50,25 +50,38 @@ class MainPageState extends State<MainPage> {
                 ),
 
               Expanded(
-                child: Scaffold(
-                  appBar: AmAppBar(
-                    title: Text(widget.pageItems[_currentIndex].title),
-                    showMinimifier: constraints.maxWidth > withForShowedDrawer,
-                    onMinimified: () {
-                      setState(() {
-                        _isMenuBarMinimified = !_isMenuBarMinimified;
-                      });
-                    },
+                child: ClipRect(
+                  child: Navigator(
+                    key: AppManager.instance.appNavigatorKey,
+                    onGenerateRoute: (route) => MaterialPageRoute(
+                      settings: route,
+                      builder: (context) => Scaffold(
+                        appBar: AmAppBar(
+                          title: Text(widget.pageItems[_currentIndex].title),
+                          showMinimifier: constraints.maxWidth > withForShowedDrawer,
+                          onMinimified: () {
+                            setState(() {
+                              _isMenuBarMinimified = !_isMenuBarMinimified;
+                            });
+                          },
+                        ),
+                        drawer: (constraints.maxWidth <= withForShowedDrawer) 
+                        ? MenuDrawer(
+                          pageItems: widget.pageItems,
+                          currentPageIndex: _currentIndex,
+                          onSelectedPage: selectPage,
+                          shouldPop: true,
+                        )
+                        : null,
+                        body: Stack(
+                          children: [
+                            for (final pageItem in widget.pageItems) 
+                              _buildOffstageWidget(pageItem)
+                          ],
+                        ),
+                      )
+                    )
                   ),
-                  drawer: (constraints.maxWidth <= withForShowedDrawer) 
-                  ? MenuDrawer(
-                    pageItems: widget.pageItems,
-                    currentPageIndex: _currentIndex,
-                    onSelectedPage: selectPage,
-                    shouldPop: true,
-                  )
-                  : null,
-                  body: widget.pages[_currentIndex],
                 ),
               ),
             ],
@@ -78,7 +91,19 @@ class MainPageState extends State<MainPage> {
     );
   }
 
+  Widget _buildOffstageWidget(PageItem pageItem) {
+    return Offstage(
+      offstage: pageItem.index != _currentIndex,
+      child: widget.pages[pageItem.index],
+    );
+  }
+
   Future selectPage(PageItem pageItem) async {
+    AppManager.instance.appNavigatorKey.currentState!.popUntil((route) => route.isFirst);
+    // TODO: manage force of no pop
+    // while (AppManager.instance.appNavigatorKey.currentState!.canPop()) {
+    //   AppManager.instance.appNavigatorKey.currentState!.maybePop();
+    // }
     setState(() {
       _currentIndex = pageItem.index;
     });

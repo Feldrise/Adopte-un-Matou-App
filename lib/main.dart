@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/src/pages/administration/admin_main_page/admin_main_page.dart';
 import 'package:adopte_un_matou/src/pages/authentication/authentication_home_page/authentication_home_page.dart';
 import 'package:adopte_un_matou/src/providers/user_store.dart';
-import 'package:adopte_un_matou/src/utils/app_manager.dart';
 import 'package:adopte_un_matou/src/utils/colors.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,16 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+class DebugHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
+
 void main() {
+  HttpOverrides.global = DebugHttpOverrides();
   runApp(const MyApp());
 }
 
@@ -27,7 +37,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           title: 'Adopte un Matou',
-          navigatorKey: AppManager.instance.appNavigatorKey,
+          // navigatorKey: AppManager.instance.appNavigatorKey,
           theme: ThemeData(
             scaffoldBackgroundColor: colorScaffold,
             primaryColor: colorPrimary,
