@@ -8,11 +8,16 @@ class MainPage extends StatefulWidget {
   const MainPage({
     Key? key, 
     required this.pageItems, 
-    required this.pages
+    required this.pages,
+    required this.bottomBar,
+    required this.drawerKey,
   }) : assert(pageItems.length == pages.length, "You don't have the same pageItems number than the pages number"), super(key: key);
 
   final List<PageItem> pageItems;
   final List<Widget> pages;
+
+  final Widget bottomBar;
+  final GlobalKey<ScaffoldState> drawerKey;
 
   @override
   MainPageState createState() => MainPageState();
@@ -34,57 +39,69 @@ class MainPageState extends State<MainPage> {
         builder: (context, constraints) {
           const double withForShowedDrawer = 732;
 
-          return Row(
-            children: [
-              if (constraints.maxWidth > withForShowedDrawer) 
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  width: _isMenuBarMinimified ? 100 : 300,
-                  child: MenuDrawer(
-                    pageItems: widget.pageItems,
-                    currentPageIndex: _currentIndex,
-                    onSelectedPage: selectPage,
-                    shouldPop: false,
-                    isMinimified: _isMenuBarMinimified,
+          return Scaffold(
+            key: widget.drawerKey,
+            body: Row(
+              children: [
+                if (constraints.maxWidth > withForShowedDrawer) 
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    width: _isMenuBarMinimified ? 100 : 300,
+                    child: MenuDrawer(
+                      pageItems: widget.pageItems,
+                      currentPageIndex: _currentIndex,
+                      onSelectedPage: selectPage,
+                      shouldPop: false,
+                      isMinimified: _isMenuBarMinimified,
+                    ),
+                  ),
+          
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: ClipRect(
+                          child: Navigator(
+                            key: AppManager.instance.appNavigatorKey,
+                            onGenerateRoute: (route) => MaterialPageRoute(
+                              settings: route,
+                              builder: (context) => Scaffold(
+                                appBar: AmAppBar(
+                                  title: Text(widget.pageItems[_currentIndex].title),
+                                  showMinimifier: constraints.maxWidth > withForShowedDrawer,
+                                  onMinimified: () {
+                                    setState(() {
+                                      _isMenuBarMinimified = !_isMenuBarMinimified;
+                                    });
+                                  },
+                                ),
+                                body: Stack(
+                                  children: [
+                                    for (final pageItem in widget.pageItems) 
+                                      _buildOffstageWidget(pageItem)
+                                  ],
+                                ),
+                              )
+                            )
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-
-              Expanded(
-                child: ClipRect(
-                  child: Navigator(
-                    key: AppManager.instance.appNavigatorKey,
-                    onGenerateRoute: (route) => MaterialPageRoute(
-                      settings: route,
-                      builder: (context) => Scaffold(
-                        appBar: AmAppBar(
-                          title: Text(widget.pageItems[_currentIndex].title),
-                          showMinimifier: constraints.maxWidth > withForShowedDrawer,
-                          onMinimified: () {
-                            setState(() {
-                              _isMenuBarMinimified = !_isMenuBarMinimified;
-                            });
-                          },
-                        ),
-                        drawer: (constraints.maxWidth <= withForShowedDrawer) 
-                        ? MenuDrawer(
-                          pageItems: widget.pageItems,
-                          currentPageIndex: _currentIndex,
-                          onSelectedPage: selectPage,
-                          shouldPop: true,
-                        )
-                        : null,
-                        body: Stack(
-                          children: [
-                            for (final pageItem in widget.pageItems) 
-                              _buildOffstageWidget(pageItem)
-                          ],
-                        ),
-                      )
-                    )
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
+            drawer: (constraints.maxWidth <= withForShowedDrawer) 
+            ? MenuDrawer(
+              pageItems: widget.pageItems,
+              currentPageIndex: _currentIndex,
+              onSelectedPage: selectPage,
+              shouldPop: true,
+            )
+            : null,
+            bottomNavigationBar: (constraints.maxWidth <= withForShowedDrawer) ?
+              widget.bottomBar : null
           );
         },
       ),

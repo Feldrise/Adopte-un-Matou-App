@@ -1,5 +1,6 @@
 import 'package:adopte_un_matou/models/page_item.dart';
 import 'package:adopte_un_matou/presentation/a_u_m_icons_icons.dart';
+import 'package:adopte_un_matou/src/pages/administration/admin_main_page/widgets/admin_bottom_bar.dart';
 import 'package:adopte_un_matou/src/pages/administration/adopted_cats_page/adopted_cats_page.dart';
 import 'package:adopte_un_matou/src/pages/administration/adoption_management_page/adoption_management_page.dart';
 import 'package:adopte_un_matou/src/pages/administration/applications_page/applications_page.dart';
@@ -17,6 +18,7 @@ class AdminMainPage extends StatelessWidget {
   AdminMainPage({Key? key}) : super(key: key);
 
   final GlobalKey<MainPageState> mainPageKey = GlobalKey<MainPageState>();
+  final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +78,15 @@ class AdminMainPage extends StatelessWidget {
     return MainPage(
       key: mainPageKey,
       pageItems: pageItems.values.toList(), 
-      pages: pages
+      pages: pages,
+      drawerKey: drawerKey,
+      bottomBar: AdminBottomBar(
+        pageItems: pageItems,
+        drawerKey: drawerKey,
+        onPageChanged: (pageItem) {
+          mainPageKey.currentState!.selectPage(pageItem);
+        },
+      ),
     );
   }
 }

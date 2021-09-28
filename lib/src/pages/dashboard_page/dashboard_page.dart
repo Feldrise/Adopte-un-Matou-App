@@ -19,16 +19,18 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double horizontalPadding = ScreenUtils.instance.horizontalPadding;
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 32, horizontal: ScreenUtils.instance.horizontalPadding),
+        padding: EdgeInsets.only(top: 32, left: horizontalPadding, right: horizontalPadding),
         child: GridView(
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 500,
             crossAxisSpacing: 16,
-            mainAxisExtent: 250,
+            mainAxisExtent: 200,
             mainAxisSpacing: 16
           ),
+          shrinkWrap: true,
           children: [
             DashboardCard(
               text: "Gérer les adoptions",
@@ -68,6 +70,7 @@ class DashboardPage extends StatelessWidget {
                 Provider.of<UserStore>(context, listen: false).logout();
               },
             ),
+            // const SizedBox(height: 32,)
           ],
         ),
       ),
