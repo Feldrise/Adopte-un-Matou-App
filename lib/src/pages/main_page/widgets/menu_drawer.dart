@@ -1,6 +1,6 @@
 import 'package:adopte_un_matou/models/page_item.dart';
 import 'package:adopte_un_matou/src/providers/user_store.dart';
-import 'package:adopte_un_matou/src/utils/colors.dart';
+import 'package:adopte_un_matou/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +29,7 @@ class MenuDrawer extends StatelessWidget {
     return Drawer(
       elevation: 0,
       child: Container(
-        color: colorWhite,
+        color: Theme.of(context).backgroundColor,
         padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,7 +49,7 @@ class MenuDrawer extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
-                    child: _buildPageItem(pageItems[index], isActive: index == currentPageIndex),
+                    child: _buildPageItem(context, pageItems[index], isActive: index == currentPageIndex),
                   );
                 },
               ),
@@ -89,19 +89,19 @@ class MenuDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildPageItem(PageItem item, {required bool isActive}) {
+  Widget _buildPageItem(BuildContext context, PageItem item, {required bool isActive}) {
     return DefaultTextStyle(
-      style: GoogleFonts.raleway(color: isActive ? colorWhite : colorBlack),
+      style: GoogleFonts.raleway(color: isActive ? Palette.colorWhite : Theme.of(context).textTheme.bodyText2!.color),
       child: Container(
         decoration: BoxDecoration(
-          color: isActive ? colorPrimary : colorWhite,
+          color: isActive ? Theme.of(context).primaryColor : Theme.of(context).backgroundColor,
           borderRadius: BorderRadius.circular(11),
         ),
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
         child: Row(
           children: [
             Expanded(
-              child: Icon(item.icon, size: 24, color: isActive ? colorWhite : colorBlack),
+              child: Icon(item.icon, size: 24, color: isActive ? Palette.colorWhite : Theme.of(context).iconTheme.color),
             ),
             // We don't show the text when it's minimified
             if (!isMinimified) ...{
@@ -127,7 +127,7 @@ class MenuDrawer extends StatelessWidget {
         child: Row(
           children: [
             const Expanded(
-              child: Icon(FeatherIcons.logOut, size: 20),
+              child: Icon(FeatherIcons.logOut, size: 24),
             ),
             // We don't show the text when it's minimified
             if (!isMinimified) ...{

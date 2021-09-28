@@ -1,4 +1,3 @@
-import 'package:adopte_un_matou/src/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 enum AmButtonType { primary }
@@ -23,7 +22,7 @@ class AmButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6.0)
       ),
-      primary: colorPrimary,
+      primary: Theme.of(context).primaryColor,
       elevation: 0,
       padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 22)
     );

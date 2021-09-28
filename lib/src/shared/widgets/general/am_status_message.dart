@@ -1,5 +1,5 @@
 
-import 'package:adopte_un_matou/src/utils/colors.dart';
+import 'package:adopte_un_matou/theme/palette.dart';
 import 'package:flutter/material.dart';
 
 enum AmStatusMessageType { error, success, info }
@@ -25,19 +25,19 @@ class AmStatusMessage extends StatelessWidget {
     late Color textColor;
 
     if (type == AmStatusMessageType.error) {
-      backgroundColor = colorError;
-      borderColor = colorBorderError;
-      textColor = colorTextError;
+      backgroundColor = Palette.colorError;
+      borderColor = Palette.colorBorderError;
+      textColor = Palette.colorTextError;
     }
     else if (type == AmStatusMessageType.success) {
-      backgroundColor = colorSuccess;
-      borderColor = colorBorderSuccess;
-      textColor = colorTextSuccess;
+      backgroundColor = Palette.colorSuccess;
+      borderColor = Palette.colorBorderSuccess;
+      textColor = Palette.colorTextSuccess;
     }
     else /* if (type == BuStatusMessageType.info) */ {
-      backgroundColor = colorInfo;
-      borderColor = colorBorderInfo;
-      textColor = colorTextInfo;
+      backgroundColor = Palette.colorInfo;
+      borderColor = Palette.colorBorderInfo;
+      textColor = Palette.colorTextInfo;
     }
 
     return DefaultTextStyle(

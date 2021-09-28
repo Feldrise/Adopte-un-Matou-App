@@ -1,4 +1,4 @@
-import 'package:adopte_un_matou/src/utils/colors.dart';
+import 'package:adopte_un_matou/theme/palette.dart';
 import 'package:flutter/material.dart';
 
 class DashboardCard extends StatelessWidget {
@@ -30,7 +30,7 @@ class DashboardCard extends StatelessWidget {
         ),
         child: Align(
           alignment: Alignment.bottomLeft,
-          child: Text(text, style: Theme.of(context).textTheme.headline6!.copyWith(color: colorWhite),),
+          child: Text(text, style: Theme.of(context).textTheme.headline6!.copyWith(color: Palette.colorWhite),),
         ),
       ),
     );

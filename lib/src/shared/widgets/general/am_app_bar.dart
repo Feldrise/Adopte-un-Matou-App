@@ -1,13 +1,12 @@
 
-import 'package:adopte_un_matou/src/utils/colors.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
+import 'package:adopte_un_matou/theme/palette.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AmAppBar extends StatelessWidget implements PreferredSizeWidget {
   const AmAppBar({
     Key? key, 
-    this.backgroundColor = colorScaffold,
+    this.backgroundColor,
     required this.title,
     this.actions,
     this.preferredSize = const Size.fromHeight(64),
@@ -19,7 +18,7 @@ class AmAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final List<Widget>? actions;
 
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   final bool showMinimifier;
   final Function()? onMinimified;
@@ -39,13 +38,10 @@ class AmAppBar extends StatelessWidget implements PreferredSizeWidget {
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
               if (title is Text)
-                DefaultTextStyle(
-                  style: GoogleFonts.raleway(color: colorBlack, fontSize: 35),
-                  child: Flexible(
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: title
-                    ),
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: title
                   ),
                 )
               else

@@ -1,7 +1,6 @@
 import 'package:adopte_un_matou/models/page_item.dart';
 import 'package:adopte_un_matou/presentation/a_u_m_icons_icons.dart';
 import 'package:adopte_un_matou/src/pages/administration/admin_main_page/admin_main_page.dart';
-import 'package:adopte_un_matou/src/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
@@ -33,7 +32,7 @@ class AdminBottomBar extends StatelessWidget {
       child: Center(
         child: BottomAppBar(
           elevation: 0,
-          color: colorScaffold,
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -80,7 +79,6 @@ class AdminBottomBar extends StatelessWidget {
             iconSize: 32,
             icon: Icon(
               icon,
-              color: colorBlack,
             ),
             onPressed: action
           ),

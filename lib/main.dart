@@ -4,11 +4,9 @@ import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/src/pages/administration/admin_main_page/admin_main_page.dart';
 import 'package:adopte_un_matou/src/pages/authentication/authentication_home_page/authentication_home_page.dart';
 import 'package:adopte_un_matou/src/providers/user_store.dart';
-import 'package:adopte_un_matou/src/utils/colors.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
+import 'package:adopte_un_matou/theme/a_u_m_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class DebugHttpOverrides extends HttpOverrides {
@@ -38,31 +36,9 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Adopte un Matou',
           // navigatorKey: AppManager.instance.appNavigatorKey,
-          theme: ThemeData(
-            scaffoldBackgroundColor: colorScaffold,
-            primaryColor: colorPrimary,
-
-            appBarTheme: const AppBarTheme(
-              systemOverlayStyle: SystemUiOverlayStyle.light,
-              color: colorScaffold,
-              elevation: 0,
-              iconTheme: IconThemeData(color: colorBlack),
-              titleTextStyle: TextStyle(color: colorBlack, fontSize: 24)
-            ),
-
-
-            textTheme: GoogleFonts.ralewayTextTheme(),
-            // textTheme: TextTheme(
-            //   headline1: GoogleFonts.raleway(fontSize: 36, fontWeight: FontWeight.bold, color: const Color(0xff0a57a5)),
-            //   headline2: GoogleFonts.raleway(fontSize: 24, fontWeight: FontWeight.bold, color: const Color(0xff575757)),
-            //   headline3: GoogleFonts.raleway(fontSize: 18, fontWeight: FontWeight.bold, color: const Color(0xff575757)),
-            //   headline4: GoogleFonts.raleway(fontSize: 16, fontWeight: FontWeight.w300, color: const Color(0xff575757)),
-            //   bodyText2: GoogleFonts.raleway(fontSize: 14, fontWeight: FontWeight.w300, color: const Color(0xff575757)),
-            //   button: GoogleFonts.raleway(fontSize: 18, color: const Color(0xfffffaf6))
-            // ),
-
-            visualDensity: VisualDensity.standard
-          ),
+          theme: AUMTheme.theme(context),
+          darkTheme: AUMTheme.themeDark(context),
+          themeMode: ThemeMode.light,
           home: FutureBuilder(
             future: Provider.of<UserStore>(context).loggedUser,
             builder: (context, snapshot) {

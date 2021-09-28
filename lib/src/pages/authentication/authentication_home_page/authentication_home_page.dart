@@ -2,7 +2,6 @@ import 'package:adopte_un_matou/src/pages/authentication/login_page/login_page.d
 import 'package:adopte_un_matou/src/pages/authentication/register_page/register_page.dart';
 import 'package:adopte_un_matou/src/shared/widgets/am_button.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_status_message.dart';
-import 'package:adopte_un_matou/src/utils/colors.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -67,7 +66,7 @@ class _AuthenticationHomePageState extends State<AuthenticationHomePage> {
                   child: ConstrainedBox(
                     constraints: constraints.maxWidth >= ScreenUtils.instance.breakpointPC ? const BoxConstraints(maxWidth: 350) : const BoxConstraints(),
                     child: Container(
-                      color: colorScaffold,
+                      color: Theme.of(context).scaffoldBackgroundColor,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
