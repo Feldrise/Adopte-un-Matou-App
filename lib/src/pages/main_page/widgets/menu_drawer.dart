@@ -1,4 +1,5 @@
 import 'package:adopte_un_matou/models/page_item.dart';
+import 'package:adopte_un_matou/src/providers/theme_store.dart';
 import 'package:adopte_un_matou/src/providers/user_store.dart';
 import 'package:adopte_un_matou/theme/palette.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +41,16 @@ class MenuDrawer extends StatelessWidget {
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: pageItems.length,
+                itemCount: pageItems.length + 2,
                 itemBuilder: (context, index) {
+                  if (index == pageItems.length) {
+                    return _buildThemeSwitch(context);
+                  }
+
+                  if (index == pageItems.length + 1) {
+                    return _buildLogoutButton(context);
+                  }
+
                   return InkWell(
                     onTap: () {
                       onSelectedPage(pageItems[index]);
@@ -54,8 +63,6 @@ class MenuDrawer extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(height: 35,),
-            _buildLogoutButton(context)
           ],
         ),
       ),
@@ -113,6 +120,27 @@ class MenuDrawer extends StatelessWidget {
             }
           ], 
         ),
+      ),
+    );
+  }
+
+  Widget _buildThemeSwitch(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
+      child: Row(
+        children: [
+          const Icon(FeatherIcons.sun),
+          const SizedBox(width: 10,),
+          Switch(
+            value: Provider.of<ThemeStore>(context).themeMode == ThemeMode.dark,
+            activeColor: Theme.of(context).primaryColor,
+            onChanged: (_) async {
+              await Provider.of<ThemeStore>(context, listen: false).toggleTheme();
+            }
+          ),
+          const SizedBox(width: 10,),
+          const Icon(FeatherIcons.moon),
+        ],
       ),
     );
   }

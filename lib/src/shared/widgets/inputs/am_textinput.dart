@@ -61,7 +61,7 @@ class _AmTextInput extends State<AmTextInput> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(widget.labelText.toUpperCase(), style: const TextStyle(color: Colors.black54, fontSize: 12),),
+        Text(widget.labelText.toUpperCase(), style: const TextStyle(fontSize: 12),),
         const SizedBox(height: 10.0,),
         TextFormField(
           readOnly: widget.readOnly,
@@ -73,11 +73,11 @@ class _AmTextInput extends State<AmTextInput> {
             decoration: InputDecoration(
               hintText: widget.hintText,
               enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.black12,),
+                borderSide: BorderSide(color: Theme.of(context).dividerColor,),
                 borderRadius: BorderRadius.circular(6.0),
               ),
               border: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.black12,),
+                borderSide: BorderSide(color: Theme.of(context).dividerColor,),
                 borderRadius: BorderRadius.circular(6.0),
               ),
               suffixIcon: widget.suffixIcon != null ? Icon(widget.suffixIcon) : !widget.obscureText ? null : InkWell(

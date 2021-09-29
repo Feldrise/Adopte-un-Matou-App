@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/src/pages/administration/admin_main_page/admin_main_page.dart';
 import 'package:adopte_un_matou/src/pages/authentication/authentication_home_page/authentication_home_page.dart';
+import 'package:adopte_un_matou/src/providers/theme_store.dart';
 import 'package:adopte_un_matou/src/providers/user_store.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:adopte_un_matou/theme/a_u_m_theme.dart';
@@ -30,42 +31,62 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => UserStore())
+        ChangeNotifierProvider(create: (context) => UserStore()),
+        ChangeNotifierProvider(create: (context) => ThemeStore()),
       ],
       builder: (context, child) {
-        return MaterialApp(
-          title: 'Adopte un Matou',
-          // navigatorKey: AppManager.instance.appNavigatorKey,
-          theme: AUMTheme.theme(context),
-          darkTheme: AUMTheme.themeDark(context),
-          themeMode: ThemeMode.light,
-          home: FutureBuilder(
-            future: Provider.of<UserStore>(context).loggedUser,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                ScreenUtils.instance.setValues(context);
+        return FutureBuilder(
+          future: initialize(context),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return MaterialApp(
+                title: 'Adopte un Matou',
+                // navigatorKey: AppManager.instance.appNavigatorKey,
+                theme: AUMTheme.theme(context),
+                darkTheme: AUMTheme.themeDark(context),
+                themeMode: Provider.of<ThemeStore>(context).themeMode,
+                home: FutureBuilder(
+                  future: Provider.of<UserStore>(context).loggedUser,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      // Provider.of<ThemeStore>(context, listen: false).getThemeFromPreferences();
 
-                if (!snapshot.hasData) {
-                  return const AuthenticationHomePage();
-                }
+                      ScreenUtils.instance.setValues(context);
 
-                final User loggedUser = snapshot.data as User;
+                      if (!snapshot.hasData) {
+                        return const AuthenticationHomePage();
+                      }
 
-                if (loggedUser.role == UserRoles.admin) {
-                  return AdminMainPage();
-                }
+                      final User loggedUser = snapshot.data as User;
 
-                Provider.of<UserStore>(context, listen: false).logout();
-                return Container();
-              }
+                      if (loggedUser.role == UserRoles.admin) {
+                        return AdminMainPage();
+                      }
 
-              return const Scaffold(
-                body: Center(child: CircularProgressIndicator(),),
+                      Provider.of<UserStore>(context, listen: false).logout();
+                      return Container();
+                    }
+
+                    return const Scaffold(
+                      body: Center(child: CircularProgressIndicator(),),
+                    );
+                  },
+                ) 
               );
-            },
-          ) 
+            }
+
+            return const MaterialApp(
+              home: Scaffold(
+                body: Center(child: CircularProgressIndicator(),),
+              ),
+            );
+          }
         );
       },
     );
+  }
+
+  Future initialize(BuildContext context) async {
+    await Provider.of<ThemeStore>(context, listen: false).getThemeFromPreferences();
   }
 }

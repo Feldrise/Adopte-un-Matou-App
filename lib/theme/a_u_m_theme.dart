@@ -14,6 +14,7 @@ class AUMTheme {
       primaryColor: Palette.colorPrimary,
       backgroundColor: Palette.colorWhite,
       scaffoldBackgroundColor: Palette.colorScaffold,
+      dividerColor: Colors.black12,
 
       appBarTheme: const AppBarTheme(
         systemOverlayStyle: SystemUiOverlayStyle.light,
@@ -39,6 +40,7 @@ class AUMTheme {
       primaryColor: Palette.colorPrimary,
       backgroundColor: Palette.colorBlack,
       scaffoldBackgroundColor: Palette.colorDarkScaffold,
+      dividerColor: Colors.white30,
 
       appBarTheme: const AppBarTheme(
         systemOverlayStyle: SystemUiOverlayStyle.dark,
