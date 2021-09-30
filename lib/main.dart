@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
               return MaterialApp(
                 title: 'Adopte un Matou',
                 // navigatorKey: AppManager.instance.appNavigatorKey,
+                debugShowCheckedModeBanner: false,
                 theme: AUMTheme.theme(context),
                 darkTheme: AUMTheme.themeDark(context),
                 themeMode: Provider.of<ThemeStore>(context).themeMode,

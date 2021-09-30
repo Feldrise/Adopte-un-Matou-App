@@ -67,15 +67,6 @@ class MainPageState extends State<MainPage> {
                             onGenerateRoute: (route) => MaterialPageRoute(
                               settings: route,
                               builder: (context) => Scaffold(
-                                appBar: AmAppBar(
-                                  title: Text(widget.pageItems[_currentIndex].title),
-                                  showMinimifier: constraints.maxWidth > withForShowedDrawer,
-                                  onMinimified: () {
-                                    setState(() {
-                                      _isMenuBarMinimified = !_isMenuBarMinimified;
-                                    });
-                                  },
-                                ),
                                 body: Stack(
                                   children: [
                                     for (final pageItem in widget.pageItems) 

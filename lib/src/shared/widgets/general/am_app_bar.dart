@@ -1,6 +1,5 @@
 
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
-import 'package:adopte_un_matou/theme/palette.dart';
 import 'package:flutter/material.dart';
 
 class AmAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -10,8 +9,6 @@ class AmAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     this.actions,
     this.preferredSize = const Size.fromHeight(64),
-    this.showMinimifier = false,
-    this.onMinimified
   }) : super(key: key);
   
   final Widget title;
@@ -20,8 +17,6 @@ class AmAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final Color? backgroundColor;
 
-  final bool showMinimifier;
-  final Function()? onMinimified;
 
   @override
   final Size preferredSize;

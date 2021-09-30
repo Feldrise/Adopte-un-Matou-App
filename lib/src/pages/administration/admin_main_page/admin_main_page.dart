@@ -2,10 +2,10 @@ import 'package:adopte_un_matou/models/page_item.dart';
 import 'package:adopte_un_matou/presentation/a_u_m_icons_icons.dart';
 import 'package:adopte_un_matou/src/pages/administration/admin_main_page/widgets/admin_bottom_bar.dart';
 import 'package:adopte_un_matou/src/pages/administration/adopted_cats_page/adopted_cats_page.dart';
-import 'package:adopte_un_matou/src/pages/administration/adoption_management_page/adoption_management_page.dart';
 import 'package:adopte_un_matou/src/pages/administration/applications_page/applications_page.dart';
 import 'package:adopte_un_matou/src/pages/administration/documents_page/documents_page.dart';
 import 'package:adopte_un_matou/src/pages/administration/users_page/users_page.dart';
+import 'package:adopte_un_matou/src/pages/adoptions_page/adoptions_page.dart';
 import 'package:adopte_un_matou/src/pages/dashboard_page/dashboard_page.dart';
 import 'package:adopte_un_matou/src/pages/main_page/main_page.dart';
 import 'package:adopte_un_matou/src/pages/profile_page/profile_page.dart';
@@ -67,7 +67,7 @@ class AdminMainPage extends StatelessWidget {
           mainPageKey.currentState!.selectPage(pageItem);
         },
       ),
-      const AdoptionManagementPage(),
+      const AdoptionsPage(),
       const AdoptedCatsPage(),
       const ApplicationsPage(),
       const UsersPage(),

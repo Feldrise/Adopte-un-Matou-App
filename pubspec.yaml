@@ -22,6 +22,7 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.2
+  dotted_border: ^2.0.0+1
   flutter:
     sdk: flutter
   flutter_feather_icons: ^2.0.0+1

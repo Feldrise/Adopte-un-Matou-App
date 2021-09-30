@@ -3,6 +3,7 @@ import 'package:adopte_un_matou/src/pages/administration/admin_main_page/admin_m
 import 'package:adopte_un_matou/src/pages/dashboard_page/manage_adoptions_page/manage_adoptions_page.dart';
 import 'package:adopte_un_matou/src/pages/dashboard_page/widgets/dashboard_card.dart';
 import 'package:adopte_un_matou/src/providers/user_store.dart';
+import 'package:adopte_un_matou/src/shared/widgets/general/am_app_bar.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final double horizontalPadding = ScreenUtils.instance.horizontalPadding;
     return Scaffold(
+      appBar: const AmAppBar(title: Text("Dashboard"),),
       body: Padding(
         padding: EdgeInsets.only(top: 32, left: horizontalPadding, right: horizontalPadding),
         child: GridView(

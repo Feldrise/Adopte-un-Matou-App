@@ -21,8 +21,9 @@ class AdminBottomBar extends StatelessWidget {
     return Container(
       height: 74,
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: const BoxDecoration(
-        border: Border(
+      decoration: BoxDecoration(
+        color: Theme.of(context).backgroundColor,
+        border: const Border(
           top: BorderSide(
             width: 1,
             color: Color(0xffcbcbcb)
@@ -32,7 +33,7 @@ class AdminBottomBar extends StatelessWidget {
       child: Center(
         child: BottomAppBar(
           elevation: 0,
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: Theme.of(context).backgroundColor,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
