@@ -24,7 +24,9 @@ class AUMTheme {
         titleTextStyle: TextStyle(color: Palette.colorBlack, fontSize: 24)
       ),
 
-      textTheme: GoogleFonts.ralewayTextTheme(),
+      textTheme: GoogleFonts.ralewayTextTheme().copyWith(
+        button: GoogleFonts.raleway(fontSize: 13, fontWeight: FontWeight.w600, color: Palette.colorWhite)
+      ),
             
       visualDensity: VisualDensity.standard
     );
@@ -50,7 +52,9 @@ class AUMTheme {
         titleTextStyle: TextStyle(color: Palette.colorWhite, fontSize: 24)
       ),
 
-      textTheme: GoogleFonts.ralewayTextTheme().apply(
+      textTheme: GoogleFonts.ralewayTextTheme().copyWith(
+        button: GoogleFonts.raleway(fontSize: 10, fontWeight: FontWeight.w600, color: Palette.colorWhite)
+      ).apply(
         decorationColor: Palette.colorWhite,
         displayColor: Palette.colorWhite,
         bodyColor: Palette.colorWhite

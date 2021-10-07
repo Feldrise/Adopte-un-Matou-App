@@ -1,6 +1,5 @@
 import 'package:adopte_un_matou/models/page_item.dart';
 import 'package:adopte_un_matou/src/pages/main_page/widgets/menu_drawer.dart';
-import 'package:adopte_un_matou/src/shared/widgets/general/am_app_bar.dart';
 import 'package:adopte_un_matou/src/utils/app_manager.dart';
 import 'package:flutter/material.dart';
 

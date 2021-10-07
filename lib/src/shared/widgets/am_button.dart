@@ -30,7 +30,7 @@ class AmButton extends StatelessWidget {
     return ElevatedButton(
       style: buttonStyle,
       onPressed: onPressed,
-      child: Text(text),
+      child: Text(text, style: Theme.of(context).textTheme.button,),
     );
   }
 }
