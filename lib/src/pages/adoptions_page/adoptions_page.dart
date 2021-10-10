@@ -2,14 +2,14 @@ import 'package:adopte_un_matou/models/cat.dart';
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/services/cats_service.dart';
 import 'package:adopte_un_matou/src/pages/adoptions_page/widgets/adoptions_list.dart';
-import 'package:adopte_un_matou/src/providers/user_store.dart';
+import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
 import 'package:adopte_un_matou/src/shared/widgets/am_button.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_app_bar.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_status_message.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AdoptionsPage extends StatefulWidget {
   const AdoptionsPage({Key? key}) : super(key: key);
@@ -25,9 +25,9 @@ class _AdoptionsPageState extends State<AdoptionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserStore>(
-      builder: (context, userStore, child) {
-        final User? user = userStore.user;
+    return Consumer(
+      builder: (context, ref, child) {
+        final User? user = ref.watch(userControllerProvider).user;
         bool canEdit = false;
 
         if (user != null) {

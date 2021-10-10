@@ -2,13 +2,13 @@ import 'package:adopte_un_matou/models/page_item.dart';
 import 'package:adopte_un_matou/src/pages/administration/admin_main_page/admin_main_page.dart';
 import 'package:adopte_un_matou/src/pages/dashboard_page/manage_adoptions_page/manage_adoptions_page.dart';
 import 'package:adopte_un_matou/src/pages/dashboard_page/widgets/dashboard_card.dart';
-import 'package:adopte_un_matou/src/providers/user_store.dart';
+import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_app_bar.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends ConsumerWidget {
   const DashboardPage({
     Key? key,
     required this.onPageChanged,
@@ -19,7 +19,7 @@ class DashboardPage extends StatelessWidget {
   final Map<AdminPages, PageItem> pageItems;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final double horizontalPadding = ScreenUtils.instance.horizontalPadding;
     return Scaffold(
       appBar: const AmAppBar(title: Text("Dashboard"),),
@@ -69,7 +69,7 @@ class DashboardPage extends StatelessWidget {
               text: "Se déconnecter",
               catImage: "cat11", 
               onTap: () {
-                Provider.of<UserStore>(context, listen: false).logout();
+                ref.read(userControllerProvider.notifier).logout();
               },
             ),
             // const SizedBox(height: 32,)

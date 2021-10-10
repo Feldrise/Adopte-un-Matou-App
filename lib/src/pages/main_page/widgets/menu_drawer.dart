@@ -1,13 +1,14 @@
 import 'package:adopte_un_matou/models/page_item.dart';
-import 'package:adopte_un_matou/src/providers/theme_store.dart';
-import 'package:adopte_un_matou/src/providers/user_store.dart';
+import 'package:adopte_un_matou/models/user.dart';
+import 'package:adopte_un_matou/src/provider/controller/theme_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
 import 'package:adopte_un_matou/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
-class MenuDrawer extends StatelessWidget {
+class MenuDrawer extends ConsumerWidget {
   const MenuDrawer({
     Key? key, 
     required this.onSelectedPage,
@@ -26,7 +27,7 @@ class MenuDrawer extends StatelessWidget {
   final bool isMinimified;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Drawer(
       elevation: 0,
       child: Container(
@@ -36,7 +37,7 @@ class MenuDrawer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image.asset("assets/logo.png", height: 171,),
-            _buildUserWidget(),
+            _buildUserWidget(ref),
             const SizedBox(height: 32,),
             Expanded(
               child: ListView.builder(
@@ -44,11 +45,11 @@ class MenuDrawer extends StatelessWidget {
                 itemCount: pageItems.length + 2,
                 itemBuilder: (context, index) {
                   if (index == pageItems.length) {
-                    return _buildThemeSwitch(context);
+                    return _buildThemeSwitch(context, ref);
                   }
 
                   if (index == pageItems.length + 1) {
-                    return _buildLogoutButton(context);
+                    return _buildLogoutButton(ref);
                   }
 
                   return InkWell(
@@ -69,30 +70,32 @@ class MenuDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildUserWidget() {
-    return Consumer<UserStore>(
-      builder: (context, userStore, child) {
-        return Row(
-          mainAxisAlignment: isMinimified ? MainAxisAlignment.center : MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(25),
-              child: Container(
-                color: Colors.grey,
-                height: 49,
-                width: 49,
-              ),
-            ),
-            if (!isMinimified) ...{
-              const SizedBox(width: 16,),
-              Flexible(
-                child: Text(userStore.user!.fullName),
-              )
-            }
-          ],
-        );
-      },
+  Widget _buildUserWidget(WidgetRef ref) {
+    final User? user = ref.watch(userControllerProvider).user;
+
+    if (user == null) {
+      return Container();
+    }
+
+    return Row(
+      mainAxisAlignment: isMinimified ? MainAxisAlignment.center : MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(25),
+          child: Container(
+            color: Colors.grey,
+            height: 49,
+            width: 49,
+          ),
+        ),
+        if (!isMinimified) ...{
+          const SizedBox(width: 16,),
+          Flexible(
+            child: Text(user.fullName),
+          )
+        }
+      ],
     );
   }
 
@@ -124,7 +127,7 @@ class MenuDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildThemeSwitch(BuildContext context) {
+  Widget _buildThemeSwitch(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
       child: Row(
@@ -132,10 +135,10 @@ class MenuDrawer extends StatelessWidget {
           const Icon(FeatherIcons.sun),
           const SizedBox(width: 10,),
           Switch(
-            value: Provider.of<ThemeStore>(context).themeMode == ThemeMode.dark,
+            value: ref.watch(themeControllerProvider).theme == ThemeMode.dark,
             activeColor: Theme.of(context).primaryColor,
             onChanged: (_) async {
-              await Provider.of<ThemeStore>(context, listen: false).toggleTheme();
+              await ref.read(themeControllerProvider.notifier).toggleTheme();
             }
           ),
           const SizedBox(width: 10,),
@@ -145,10 +148,10 @@ class MenuDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildLogoutButton(BuildContext context) {
+  Widget _buildLogoutButton(WidgetRef ref) {
     return InkWell(
       onTap: () async {
-        await Provider.of<UserStore>(context, listen: false).logout();
+        await ref.read(userControllerProvider.notifier).logout();
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),

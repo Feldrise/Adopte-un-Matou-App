@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 mixin UserRoles {
   static const String admin = "Admin";
   static const String adoptant = "Adoptant";
@@ -8,28 +10,63 @@ mixin UserRoles {
   };
 }
 
+@immutable
 class User {
-  String? id;
+  final String? id;
 
-  String firstName;
-  String lastName;
+  final String firstName;
+  final String lastName;
 
-  String email;
+  final String email;
 
-  String role;
-  String? token;
+  final String role;
+  final String? token;
+
+  User copyWith({
+    String? id,
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? role
+  }) {
+    return User(
+      id ?? this.id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      email: email ?? this.email,
+      role: role ?? this.role
+    );
+  }
+
 
   // Utilities
   String get fullName => "$firstName $lastName";
   String get authenticationHeader => "Bearer $token";
 
-  User(this.id, {
+  const User(this.id, {
     required this.firstName,
     required this.lastName,
     required this.email,
     required this.role,
     this.token
   });
+  
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is User && 
+      other.id == id &&
+      other.firstName == firstName &&
+      other.lastName == lastName &&
+      other.email == email &&
+      other.role == role;
+  }
+
+  @override 
+  int get hashCode {
+    return id.hashCode ^ firstName.hashCode ^ lastName.hashCode ^ email.hashCode ^ role.hashCode;
+  }
 
   User.fromMap(Map<String, dynamic> map) : 
   id = map['id'] as String,

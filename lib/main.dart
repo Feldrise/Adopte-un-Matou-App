@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/src/pages/administration/admin_main_page/admin_main_page.dart';
 import 'package:adopte_un_matou/src/pages/authentication/authentication_home_page/authentication_home_page.dart';
-import 'package:adopte_un_matou/src/providers/theme_store.dart';
-import 'package:adopte_un_matou/src/providers/user_store.dart';
-import 'package:adopte_un_matou/src/utils/screen_utils.dart';
+import 'package:adopte_un_matou/src/provider/controller/theme_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
 import 'package:adopte_un_matou/theme/a_u_m_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DebugHttpOverrides extends HttpOverrides {
   @override
@@ -20,74 +19,53 @@ class DebugHttpOverrides extends HttpOverrides {
 
 void main() {
   HttpOverrides.global = DebugHttpOverrides();
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => UserStore()),
-        ChangeNotifierProvider(create: (context) => ThemeStore()),
-      ],
-      builder: (context, child) {
-        return FutureBuilder(
-          future: initialize(context),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return MaterialApp(
-                title: 'Adopte un Matou',
-                // navigatorKey: AppManager.instance.appNavigatorKey,
-                debugShowCheckedModeBanner: false,
-                theme: AUMTheme.theme(context),
-                darkTheme: AUMTheme.themeDark(context),
-                themeMode: Provider.of<ThemeStore>(context).themeMode,
-                home: FutureBuilder(
-                  future: Provider.of<UserStore>(context).loggedUser,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      // Provider.of<ThemeStore>(context, listen: false).getThemeFromPreferences();
-
-                      ScreenUtils.instance.setValues(context);
-
-                      if (!snapshot.hasData) {
-                        return const AuthenticationHomePage();
-                      }
-
-                      final User loggedUser = snapshot.data as User;
-
-                      if (loggedUser.role == UserRoles.admin) {
-                        return AdminMainPage();
-                      }
-
-                      Provider.of<UserStore>(context, listen: false).logout();
-                      return Container();
-                    }
-
-                    return const Scaffold(
-                      body: Center(child: CircularProgressIndicator(),),
-                    );
-                  },
-                ) 
-              );
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (!ref.watch(themeControllerProvider).loadedAtStartup) {
+      ref.read(themeControllerProvider.notifier).loadThemeFromSettings();
+      return _loadingScreen();
+    }
+    else if (!ref.watch(userControllerProvider).loadedAtStartup) {
+      ref.read(userControllerProvider.notifier).loadFromSettings();
+      return _loadingScreen();
+    }
+    
+    return MaterialApp(
+      title: 'Adopte un Matou',
+      // navigatorKey: AppManager.instance.appNavigatorKey,
+      debugShowCheckedModeBanner: false,
+      theme: AUMTheme.theme(context),
+      darkTheme: AUMTheme.themeDark(context),
+      themeMode: ref.watch(themeControllerProvider).theme,
+      home: Builder(
+        builder: (context) {
+          final User? user = ref.watch(userControllerProvider).user;
+          if (user != null) {
+            if (user.role == UserRoles.admin) {
+              return AdminMainPage();
             }
 
-            return const MaterialApp(
-              home: Scaffold(
-                body: Center(child: CircularProgressIndicator(),),
-              ),
-            );
+            return Container();
           }
-        );
-      },
+
+          return const AuthenticationHomePage();
+        }
+      )
     );
   }
 
-  Future initialize(BuildContext context) async {
-    await Provider.of<ThemeStore>(context, listen: false).getThemeFromPreferences();
+  Widget _loadingScreen() {
+    return const MaterialApp(
+      home: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 }
