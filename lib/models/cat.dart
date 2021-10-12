@@ -1,18 +1,21 @@
+import 'package:flutter/material.dart';
+
+@immutable
 class Cat {
-  String? id;
+  final String? id;
 
-  String name;
-  String genre;
-  String age;
+  final String name;
+  final String genre;
+  final String age;
 
-  int price;
+  final int price;
 
-  String location;
+  final String location;
 
-  List<String> properties;
-  String description;
+  final List<String> properties;
+  final String description;
 
-  Cat(this.id, {
+  const Cat(this.id, {
     required this.name,
     required this.genre,
     required this.age,
@@ -21,6 +24,28 @@ class Cat {
     required this.properties,
     required this.description
   });
+
+  Cat copyWith({
+    String? id,
+    String? name,
+    String? genre,
+    String? age,
+    int? price,
+    String? location,
+    List<String>? properties,
+    String? description,
+  }) {
+    return Cat(
+      id ?? this.id, 
+      name: name ?? this.name,
+      genre: genre ?? this.genre,
+      age: age ?? this.age,
+      price: price ?? this.price,
+      location: location ?? this.location,
+      properties: properties ?? this.properties,
+      description: description ?? this.description
+    );
+  }
 
   Cat.fromMap(Map<String, dynamic> map) :
     id = map['id'] as String,
@@ -44,4 +69,29 @@ class Cat {
       "description": description
     };
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Cat &&
+      other.id == id &&
+      other.name == name &&
+      other.genre == genre &&
+      other.age == age &&
+      other.price == price &&
+      other.location == location &&
+      other.properties == properties &&
+      other.description == description;
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ 
+                      name.hashCode ^ 
+                      genre.hashCode ^ 
+                      age.hashCode ^ 
+                      price.hashCode ^ 
+                      location.hashCode ^
+                      properties.hashCode ^
+                      description.hashCode;
 }

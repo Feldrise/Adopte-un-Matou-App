@@ -1,6 +1,6 @@
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/services/authentication_service.dart';
-import 'package:adopte_un_matou/src/provider/controller/states/user_state.dart';
+import 'package:adopte_un_matou/src/provider/states/user_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final userControllerProvider = StateNotifierProvider.autoDispose<UserController, UserState>((ref) {

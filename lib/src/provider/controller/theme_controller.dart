@@ -1,4 +1,4 @@
-import 'package:adopte_un_matou/src/provider/controller/states/theme_state.dart';
+import 'package:adopte_un_matou/src/provider/states/theme_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';

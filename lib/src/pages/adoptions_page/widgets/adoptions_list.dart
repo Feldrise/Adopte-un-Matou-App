@@ -1,48 +1,58 @@
 import 'package:adopte_un_matou/models/cat.dart';
 import 'package:adopte_un_matou/src/pages/view_cat_page/view_cat_page.dart';
+import 'package:adopte_un_matou/src/provider/controller/adoption_cats_controller.dart';
 import 'package:adopte_un_matou/src/shared/widgets/cards/cat_card.dart';
+import 'package:adopte_un_matou/src/shared/widgets/general/am_status_message.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AdoptionsList extends StatelessWidget {
+class AdoptionsList extends ConsumerWidget {
   const AdoptionsList({
     Key? key,
     required this.editMode,
-    required this.cats
   }) : super(key: key);
 
   final bool editMode;
-  final List<Cat> cats;
 
   @override
-  Widget build(BuildContext context) {
-    if (cats.isEmpty && !editMode) {
-      return _buildEmptyWidget();
-    } 
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ref.watch(adoptionCatsControllerProvider).catsToAdopte.when(
+      data: (cats) {
+        if (cats.isEmpty && !editMode) {
+          return _buildEmptyWidget();
+        } 
 
-    return GridView(
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 210,
-        crossAxisSpacing: 16,
-        mainAxisExtent: 250,
-        mainAxisSpacing: 16
-      ),
-      children: [
-        for (final cat in cats) 
-          CatCard(cat: cat),
-        
-        if (editMode) 
-          _buildAddButton(context)
-      ], 
+        return GridView(
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 210,
+            crossAxisSpacing: 16,
+            mainAxisExtent: 250,
+            mainAxisSpacing: 16
+          ),
+          children: [
+            for (final cat in cats) 
+              CatCard(cat: cat),
+            
+            if (editMode) 
+              _buildAddButton(context, ref)
+          ], 
+        );
+      },
+      loading: (data) => const Center(child: CircularProgressIndicator(),),
+      error: (error, stackTrace, data) => AmStatusMessage(
+        title: "Erreur",
+        message: "Une erreur est survenue : $error"
+      )
     );
   }
 
-  Widget _buildAddButton(BuildContext context) {
+  Widget _buildAddButton(BuildContext context, WidgetRef ref) {
     const borderRadius = 11.0;
 
     return InkWell(
-      onTap: () async => _addCatPressed(context),
+      onTap: () async => _addCatPressed(context, ref),
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor.withOpacity(0.2),
@@ -96,8 +106,8 @@ class AdoptionsList extends StatelessWidget {
     );
   }
 
-  Future _addCatPressed(BuildContext context) async {
-    // final Cat tempDemoCat = Cat("superId",
+  Future _addCatPressed(BuildContext context, WidgetRef ref) async {
+    // const Cat tempDemoCat = Cat("superId",
     //   name: "Jack",
     //   age: "7 mois",
     //   genre: "Mal",
@@ -106,6 +116,8 @@ class AdoptionsList extends StatelessWidget {
     //   description: "Jack est un super chat tout mignon !",
     //   properties: []
     // );
+
+    // ref.read(adoptionCatsControllerProvider.notifier).addCat(tempDemoCat); 
 
     await Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => const ViewCatPage(canEdit: true,))

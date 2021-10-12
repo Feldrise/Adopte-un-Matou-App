@@ -4,8 +4,9 @@ import 'package:adopte_un_matou/src/shared/widgets/general/am_app_bar.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ViewCatPage extends StatefulWidget {
+class ViewCatPage extends ConsumerStatefulWidget {
   const ViewCatPage({
     Key? key, 
     this.cat,
@@ -16,11 +17,12 @@ class ViewCatPage extends StatefulWidget {
   final bool canEdit;
 
   @override
-  State<ViewCatPage> createState() => _ViewCatPageState();
+  ConsumerState<ViewCatPage> createState() => _ViewCatPageState();
 }
 
-class _ViewCatPageState extends State<ViewCatPage> {
+class _ViewCatPageState extends ConsumerState<ViewCatPage> {
   bool _isEditing = false;
+
 
   @override
   Widget build(BuildContext context) {
