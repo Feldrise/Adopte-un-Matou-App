@@ -23,4 +23,7 @@ class Palette {
   static const Color colorInfo = Color(0xffd1ecf1);
   static const Color colorBorderInfo = Color(0xffbde4eb);
   static const Color colorTextInfo = Color(0xff0c5460);
+
+  static const Color colorGrey1 = Color(0xfff2f2f2);
+  static const Color colorGrey2 = Color(0xffc4c4c4);
 }
