@@ -13,6 +13,7 @@ class AUMTheme {
       ),
       primaryColor: Palette.colorPrimary,
       backgroundColor: Palette.colorWhite,
+      cardColor: Palette.colorWhite,
       scaffoldBackgroundColor: Palette.colorScaffold,
       dividerColor: Colors.black12,
 
@@ -25,6 +26,9 @@ class AUMTheme {
       ),
 
       textTheme: GoogleFonts.ralewayTextTheme().copyWith(
+        headline1: GoogleFonts.raleway(fontSize: 35, color: Palette.colorBlack),
+        headline2: GoogleFonts.raleway(fontSize: 28, color: Palette.colorBlack),
+        headline3: GoogleFonts.raleway(fontSize: 26, color: Palette.colorBlack),
         button: GoogleFonts.raleway(fontSize: 13, fontWeight: FontWeight.w600, color: Palette.colorWhite)
       ),
             
@@ -41,6 +45,7 @@ class AUMTheme {
       ),
       primaryColor: Palette.colorPrimary,
       backgroundColor: Palette.colorBlack,
+      cardColor: Palette.colorBlack,
       scaffoldBackgroundColor: Palette.colorDarkScaffold,
       dividerColor: Colors.white30,
 

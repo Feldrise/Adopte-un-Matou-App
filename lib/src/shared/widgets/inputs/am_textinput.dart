@@ -65,33 +65,36 @@ class _AmTextInput extends State<AmTextInput> {
         const SizedBox(height: 10.0,),
         TextFormField(
           readOnly: widget.readOnly,
-            key: widget.formKey,
-            obscureText: _obscureText,
-            controller: widget.controller,
-            keyboardType: widget.inputType,
-            maxLines: widget.maxLines,
-            decoration: InputDecoration(
-              hintText: widget.hintText,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).dividerColor,),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).dividerColor,),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-              suffixIcon: widget.suffixIcon != null ? Icon(widget.suffixIcon) : !widget.obscureText ? null : InkWell(
-                onTap: _textVisibilityUpdated,
-                child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
-              )
+          key: widget.formKey,
+          obscureText: _obscureText,
+          controller: widget.controller,
+          keyboardType: widget.inputType,
+          maxLines: widget.maxLines,
+          decoration: InputDecoration(
+            hintText: widget.hintText,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            fillColor: Theme.of(context).cardColor,
+            filled: true,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Theme.of(context).dividerColor,),
+              borderRadius: BorderRadius.circular(6.0),
             ),
-            validator: widget.validator == null ? null : (value) => widget.validator!(value ?? ""),
-            onSaved: widget.onSaved != null ? (value) => widget.onSaved!(value ?? "") : null,
-            onChanged: (value) {
-              if (widget.onChanged != null) {
-                widget.onChanged!(value);
-              }
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: Theme.of(context).dividerColor,),
+              borderRadius: BorderRadius.circular(6.0),
+            ),
+            suffixIcon: widget.suffixIcon != null ? Icon(widget.suffixIcon) : !widget.obscureText ? null : InkWell(
+              onTap: _textVisibilityUpdated,
+              child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+            )
+          ),
+          validator: widget.validator == null ? null : (value) => widget.validator!(value ?? ""),
+          onSaved: widget.onSaved != null ? (value) => widget.onSaved!(value ?? "") : null,
+          onChanged: (value) {
+            if (widget.onChanged != null) {
+              widget.onChanged!(value);
             }
+          }
         ),
       ],
     );

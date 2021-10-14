@@ -1,4 +1,3 @@
-import 'package:adopte_un_matou/models/cat.dart';
 import 'package:adopte_un_matou/src/pages/view_cat_page/view_cat_page.dart';
 import 'package:adopte_un_matou/src/provider/controller/adoption_cats_controller.dart';
 import 'package:adopte_un_matou/src/shared/widgets/cards/cat_card.dart';
@@ -31,6 +30,7 @@ class AdoptionsList extends ConsumerWidget {
             mainAxisExtent: 250,
             mainAxisSpacing: 16
           ),
+          primary: false,
           children: [
             for (final cat in cats) 
               CatCard(cat: cat),
@@ -107,18 +107,6 @@ class AdoptionsList extends ConsumerWidget {
   }
 
   Future _addCatPressed(BuildContext context, WidgetRef ref) async {
-    // const Cat tempDemoCat = Cat("superId",
-    //   name: "Jack",
-    //   age: "7 mois",
-    //   genre: "Mal",
-    //   price: 160,
-    //   location: "Rennes",
-    //   description: "Jack est un super chat tout mignon !",
-    //   properties: []
-    // );
-
-    // ref.read(adoptionCatsControllerProvider.notifier).addCat(tempDemoCat); 
-
     await Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => const ViewCatPage(canEdit: true,))
     );
