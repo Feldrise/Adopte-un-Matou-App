@@ -75,9 +75,9 @@ class _AmImagePickerState extends State<AmImagePicker> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Choisir une image", style: GoogleFonts.raleway(fontSize: 20, color: Palette.colorGrey2),),
+            Text("Choisir une image", style: GoogleFonts.raleway(fontSize: 20, color: Palette.colorGrey3),),
             const SizedBox(height: 16,),
-            const Icon(FeatherIcons.upload, size: 96, color: Palette.colorGrey2,)
+            const Icon(FeatherIcons.upload, size: 96, color: Palette.colorGrey3,)
           ],
         ),
       ),

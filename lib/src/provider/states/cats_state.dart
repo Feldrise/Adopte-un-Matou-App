@@ -20,6 +20,20 @@ class AdoptionCatsState {
     );
   }
 
+  AsyncValue<List<Cat>> get adoptedCats {
+    return cats.when(
+      data: (data) {
+        return AsyncValue.data([
+          for (final cat in data)
+            if (cat.adoptionStatus == CatAdoptionStatus.adopted)
+              cat 
+        ]);
+      },
+      loading: (data) => const AsyncValue.loading(),
+      error: (error, stackTrace, data) => AsyncValue.error(error, stackTrace: stackTrace)
+    );
+  }
+
   const AdoptionCatsState({
     required this.cats,
   });

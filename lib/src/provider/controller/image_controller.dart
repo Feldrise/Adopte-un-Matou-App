@@ -9,7 +9,7 @@ class ImageController extends StateNotifier<ImageState> {
   ImageController(ImageState state) : super(state);
 
   Future loadOnline({String? authenticationHeader}) async {
-    if (state.imageUrl.isEmpty) return;
+    if (state.imageUrl.isEmpty || state.image != null) return;
 
     state = state.copyWith(image: const AsyncValue.loading()); 
 

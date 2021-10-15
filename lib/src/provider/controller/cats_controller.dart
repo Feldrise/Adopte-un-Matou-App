@@ -15,7 +15,9 @@ final catsControllerProvider = StateNotifierProvider.autoDispose<CatsController,
 class CatsController extends StateNotifier<AdoptionCatsState> {
   CatsController(AdoptionCatsState state) : super(state);
 
-  Future loadData({String? authenticationHeader}) async {
+  Future loadData({String? authenticationHeader, bool refresh = false}) async {
+    if (state.cats.asData != null && !refresh) return;
+
     state = state.copyWidth(cats: const AsyncValue.loading());
 
     List<Cat> cats = await CatsService.instance.getCats(authorization: authenticationHeader);

@@ -20,13 +20,6 @@ class _AdoptionsPageState extends ConsumerState<AdoptionsPage> {
   bool _isEditing = false;
 
   @override
-  void initState() {
-    super.initState();
-
-    ref.read(catsControllerProvider.notifier).loadData();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final User? user = ref.watch(userControllerProvider).user;
     bool canEdit = false;

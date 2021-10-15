@@ -41,7 +41,7 @@ class _CatCardState extends ConsumerState<CatCard> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(22),
         child: Container(
-          color: Palette.colorGrey2,
+          color: Palette.colorGrey3,
           child: Stack(
             children: [
               Positioned.fill(

@@ -1,9 +1,11 @@
 import 'package:adopte_un_matou/models/page_item.dart';
 import 'package:adopte_un_matou/src/pages/main_page/widgets/menu_drawer.dart';
+import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
 import 'package:adopte_un_matou/src/utils/app_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends ConsumerStatefulWidget {
   const MainPage({
     Key? key, 
     required this.pageItems, 
@@ -22,10 +24,17 @@ class MainPage extends StatefulWidget {
   MainPageState createState() => MainPageState();
 }
 
-class MainPageState extends State<MainPage> {
+class MainPageState extends ConsumerState<MainPage> {
   int _currentIndex = 0;
 
   bool _isMenuBarMinimified = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    ref.read(catsControllerProvider.notifier).loadData();
+  }
 
   @override
   Widget build(BuildContext context) {

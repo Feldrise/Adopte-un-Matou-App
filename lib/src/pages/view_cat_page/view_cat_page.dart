@@ -386,10 +386,10 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
         ),
 
         // The moving button
-        if (widget.cat != null) 
+        if (widget.cat != null && widget.cat!.adoptionStatus != CatAdoptionStatus.adopted)
           AmButton(
             text: "Déplacer dans les adoptés",
-            onPressed: () {},
+            onPressed: _moveToAdopted,
           )
       ],
     );
@@ -499,6 +499,35 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
       setState(() {
         _isLoading = false;
         _errorMessage = "Impossible de mettre à jour le chat ; ${e.code} ; ${e.message}";
+      });
+    }
+    on Exception catch(e) {
+      setState(() {
+        _isLoading = false;
+        _errorMessage = "Une erreur inconnue s'est produite : $e";   
+      });
+    }
+  }
+
+   Future _moveToAdopted() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final Cat cat = widget.cat!.copyWith(adoptionStatus: CatAdoptionStatus.adopted);
+
+    try {
+      final String? authorization = ref.read(userControllerProvider).user?.authenticationHeader;
+
+      await CatsService.instance.updateCat(null, cat, authorization: authorization);
+
+      ref.read(catsControllerProvider.notifier).updateCat(cat);
+      Navigator.of(context).pop();
+    }
+    on PlatformException catch(e) {
+      setState(() {
+        _isLoading = false;
+        _errorMessage = "Impossible de déplacer le chat ; ${e.code} ; ${e.message}";
       });
     }
     on Exception catch(e) {
