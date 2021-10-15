@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:adopte_un_matou/models/cat.dart';
 import 'package:adopte_un_matou/services/cats_service.dart';
-import 'package:adopte_un_matou/src/provider/controller/adoption_cats_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/image_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
 import 'package:adopte_un_matou/src/provider/states/image_state.dart';
@@ -428,6 +428,7 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
           );
         }
       ),
+      adoptionStatus: CatAdoptionStatus.waiting,
       genre: _genre,
       age: _ageController.text,
       price: int.parse(_priceController.text),
@@ -441,7 +442,7 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
 
       final String id = await CatsService.instance.createCat(_image, cat, authorization: authorization);
 
-      ref.read(adoptionCatsControllerProvider.notifier).addCat(cat.copyWith(id: id));
+      ref.read(catsControllerProvider.notifier).addCat(cat.copyWith(id: id));
       Navigator.of(context).pop();
     }
     on PlatformException catch(e) {
@@ -491,7 +492,7 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
 
       await CatsService.instance.updateCat(_imageUpdated ? _image : null, cat, authorization: authorization);
 
-      ref.read(adoptionCatsControllerProvider.notifier).updateCat(cat);
+      ref.read(catsControllerProvider.notifier).updateCat(cat);
       Navigator.of(context).pop();
     }
     on PlatformException catch(e) {

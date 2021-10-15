@@ -1,6 +1,6 @@
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/src/pages/adoptions_page/widgets/adoptions_list.dart';
-import 'package:adopte_un_matou/src/provider/controller/adoption_cats_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
 import 'package:adopte_un_matou/src/shared/widgets/am_button.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_app_bar.dart';
@@ -23,7 +23,7 @@ class _AdoptionsPageState extends ConsumerState<AdoptionsPage> {
   void initState() {
     super.initState();
 
-    ref.read(adoptionCatsControllerProvider.notifier).loadData();
+    ref.read(catsControllerProvider.notifier).loadData();
   }
 
   @override
@@ -75,7 +75,7 @@ class _AdoptionsPageState extends ConsumerState<AdoptionsPage> {
   }
 
   void _toggleEdit() {
-    if (ref.read(adoptionCatsControllerProvider).catsToAdopte.asData == null) {
+    if (ref.read(catsControllerProvider).catsToAdopte.asData == null) {
       return;
     }
 

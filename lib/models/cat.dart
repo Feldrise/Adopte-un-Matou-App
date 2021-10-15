@@ -22,6 +22,8 @@ class Cat {
 
   final AutoDisposeStateNotifierProvider<ImageController, ImageState> image;
 
+  final String adoptionStatus;
+
   final String name;
   final String genre;
   final String age;
@@ -35,6 +37,7 @@ class Cat {
 
   const Cat(this.id, {
     required this.image,
+    required this.adoptionStatus,
     required this.name,
     required this.genre,
     required this.age,
@@ -47,6 +50,7 @@ class Cat {
   Cat copyWith({
     String? id,
     AutoDisposeStateNotifierProvider<ImageController, ImageState>? image,
+    String? adoptionStatus,
     String? name,
     String? genre,
     String? age,
@@ -57,6 +61,7 @@ class Cat {
   }) {
     return Cat(
       id ?? this.id, 
+      adoptionStatus: adoptionStatus ?? this.adoptionStatus,
       image: image ?? this.image,
       name: name ?? this.name,
       genre: genre ?? this.genre,
@@ -77,6 +82,7 @@ class Cat {
         )
       );
     }),
+    adoptionStatus = map['adoptionStatus'] as String? ?? CatAdoptionStatus.waiting,
     name = map['name'] as String? ?? "Unkown name",
     genre = map['genre'] as String? ?? "Unkown genre",
     age = map['age'] as String? ?? "Unkown age",
@@ -88,6 +94,7 @@ class Cat {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       "id": id,
+      "adoptionStatus": adoptionStatus,
       "name": name,
       "genre": genre,
       "age": age,

@@ -1,5 +1,5 @@
 import 'package:adopte_un_matou/src/pages/view_cat_page/view_cat_page.dart';
-import 'package:adopte_un_matou/src/provider/controller/adoption_cats_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
 import 'package:adopte_un_matou/src/shared/widgets/cards/cat_card.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_status_message.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -17,7 +17,7 @@ class AdoptionsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(adoptionCatsControllerProvider).catsToAdopte.when(
+    return ref.watch(catsControllerProvider).catsToAdopte.when(
       data: (cats) {
         if (cats.isEmpty && !editMode) {
           return _buildEmptyWidget();
