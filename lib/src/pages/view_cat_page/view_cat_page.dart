@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:adopte_un_matou/models/cat.dart';
+import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/services/cats_service.dart';
+import 'package:adopte_un_matou/src/pages/application_page/application_page.dart';
 import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/image_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
@@ -359,7 +361,16 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
               maxLines: 5,
             )
           else 
-            Text(widget.cat?.description ?? "Description")
+            Text(widget.cat?.description ?? "Description"),
+
+          if (ref.watch(userControllerProvider).user == null || ref.watch(userControllerProvider).user?.role == UserRoles.adoptant) ...{
+            const SizedBox(height: 24,),
+            AmButton(
+              text: "Je veux l'adopter",
+              onPressed: _adoptCat,
+            ),
+          }
+
         ],
       ),
     );
@@ -536,5 +547,13 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
         _errorMessage = "Une erreur inconnue s'est produite : $e";   
       });
     }
+  }
+
+  Future _adoptCat() async {
+    bool adopted = await Navigator.of(context).push<bool?>(
+      MaterialPageRoute(builder: (context) => ApplicationPage(cat: widget.cat))
+    ) ?? false;
+
+    if (adopted) Navigator.of(context).pop();   
   }
 }

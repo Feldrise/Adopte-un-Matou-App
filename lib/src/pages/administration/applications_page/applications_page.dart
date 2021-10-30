@@ -1,3 +1,4 @@
+import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
 
 class ApplicationsPage extends StatelessWidget {
@@ -5,8 +6,13 @@ class ApplicationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text("Hello Applications"),),
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: ScreenUtils.instance.horizontalPadding, vertical: 0.0),
+        child: ListView(
+          
+        ),
+      ),
     );
   }
 }

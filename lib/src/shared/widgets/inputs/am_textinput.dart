@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AmTextInput extends StatefulWidget {
   const AmTextInput({
@@ -61,10 +62,11 @@ class _AmTextInput extends State<AmTextInput> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(widget.labelText.toUpperCase(), style: const TextStyle(fontSize: 12),),
+        Text(widget.labelText, style: GoogleFonts.raleway(fontSize: 12),),
         const SizedBox(height: 10.0,),
         TextFormField(
           readOnly: widget.readOnly,
+          enabled: !widget.readOnly,
           key: widget.formKey,
           obscureText: _obscureText,
           controller: widget.controller,
@@ -73,7 +75,7 @@ class _AmTextInput extends State<AmTextInput> {
           decoration: InputDecoration(
             hintText: widget.hintText,
             contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            fillColor: Theme.of(context).cardColor,
+            fillColor: widget.readOnly ? Theme.of(context).disabledColor : Theme.of(context).cardColor,
             filled: true,
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Theme.of(context).dividerColor,),

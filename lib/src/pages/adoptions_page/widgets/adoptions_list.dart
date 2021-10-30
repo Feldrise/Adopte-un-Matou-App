@@ -41,9 +41,12 @@ class AdoptionsList extends ConsumerWidget {
         );
       },
       loading: (data) => const Center(child: CircularProgressIndicator(),),
-      error: (error, stackTrace, data) => AmStatusMessage(
-        title: "Erreur",
-        message: "Une erreur est survenue : $error"
+      error: (error, stackTrace, data) => Align(
+        alignment: Alignment.topLeft,
+        child: AmStatusMessage(
+          title: "Erreur",
+          message: "Une erreur est survenue : $error"
+        ),
       )
     );
   }
@@ -107,8 +110,8 @@ class AdoptionsList extends ConsumerWidget {
   }
 
   Future _addCatPressed(BuildContext context, WidgetRef ref) async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => const ViewCatPage(canEdit: true,))
+    await Navigator.of(context).push<dynamic>(
+      MaterialPageRoute<dynamic>(builder: (context) => const ViewCatPage(canEdit: true,))
     );
   }
 }

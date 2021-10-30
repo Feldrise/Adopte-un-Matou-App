@@ -4,13 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @immutable
 class AdoptionCatsState {
-  final AsyncValue<List<Cat>> cats;
+  final AsyncValue<Map<String, Cat>> cats;
 
   AsyncValue<List<Cat>> get catsToAdopte {
     return cats.when(
       data: (data) {
         return AsyncValue.data([
-          for (final cat in data)
+          for (final cat in data.values)
             if (cat.adoptionStatus == CatAdoptionStatus.waiting) 
               cat 
         ]);
@@ -24,7 +24,7 @@ class AdoptionCatsState {
     return cats.when(
       data: (data) {
         return AsyncValue.data([
-          for (final cat in data)
+          for (final cat in data.values)
             if (cat.adoptionStatus == CatAdoptionStatus.adopted)
               cat 
         ]);
@@ -39,7 +39,7 @@ class AdoptionCatsState {
   });
 
   AdoptionCatsState copyWidth({
-    AsyncValue<List<Cat>>? cats
+    AsyncValue<Map<String, Cat>>? cats
   }) {
     return AdoptionCatsState(cats: cats ?? this.cats);
   }

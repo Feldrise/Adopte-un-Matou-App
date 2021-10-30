@@ -1,21 +1,21 @@
+
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:adopte_un_matou/models/cat.dart';
+import 'package:adopte_un_matou/models/application.dart';
 import 'package:adopte_un_matou/src/utils/constants.dart';
 import 'package:flutter/services.dart';
 
 import 'package:http/http.dart' as http;
 
-class CatsService {
-  CatsService._privateConstructor();
+class ApplicationsService {
+  ApplicationsService._privateConstructor();
 
-  final String serviceBaseUrl = "$kApiBaseUrl/cats";
+  final String serviceBaseUrl = "$kApiBaseUrl/applications";
 
-  static final CatsService instance = CatsService._privateConstructor();
+  static final ApplicationsService instance = ApplicationsService._privateConstructor();
 
-  Future<Cat> getCat(String id, {String? authorization}) async {
+  Future<Application> getApplication(String id, {String? authorization}) async {
     final http.Response response = await http.get(
       Uri.parse("$serviceBaseUrl/$id"),
       headers: <String, String>{
@@ -25,13 +25,13 @@ class CatsService {
     );
 
     if (response.statusCode == 200) {
-      return Cat.fromMap(jsonDecode(response.body) as Map<String, dynamic>);
+      return Application.fromMap(jsonDecode(response.body) as Map<String, dynamic>);
     }
 
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
-  Future<Map<String, Cat>> getCats({String? authorization}) async {
+  Future<Map<String, Application>> getApplications({String? authorization}) async {
     final http.Response response = await http.get(
       Uri.parse(serviceBaseUrl),
       headers: <String, String>{
@@ -41,36 +41,20 @@ class CatsService {
     );
 
     if (response.statusCode == 200) {
-      final List<Map<String, dynamic>> catsMaps = (jsonDecode(response.body) as List<dynamic>).cast<Map<String, dynamic>>();
-      final Map<String, Cat> cats = {};
+      final List<Map<String, dynamic>> applicationsMap = (jsonDecode(response.body) as List<dynamic>).cast<Map<String, dynamic>>();
+      final Map<String, Application> applications = {};
 
-      for (final map in catsMaps) {
-        cats[map['id'] as String] = Cat.fromMap(map);
+      for (final map in applicationsMap) {
+        applications[map['id'] as String] = Application.fromMap(map);
       }
 
-      return cats;
+      return applications;
     }
 
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
-  Future<String?> getCatImage(String id, {String? authorization}) async {
-    final http.Response response = await http.get(
-      Uri.parse("$serviceBaseUrl/$id/image"),
-      headers: <String, String>{
-        if (authorization != null)
-          HttpHeaders.authorizationHeader: authorization
-      } 
-    );
-
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body) as String?;
-    }
-
-    throw PlatformException(code: response.statusCode.toString(), message: response.body);
-  }
-
-  Future<String> createCat(Uint8List? image, Cat cat, {String? authorization}) async {
+  Future<String> createApplication(Application application, {String? authorization}) async {
     final http.Response response = await http.post(
       Uri.parse(serviceBaseUrl),
       headers: <String, String>{
@@ -78,11 +62,7 @@ class CatsService {
           HttpHeaders.authorizationHeader: authorization,
         HttpHeaders.contentTypeHeader: "application/json; charset=UTF-8",
       },
-      body: jsonEncode(<String, dynamic>{
-        ...cat.toJson(),
-        if (image != null)
-          'image': base64Encode(image)
-      })
+      body: jsonEncode(application.toJson())
     );
 
     if (response.statusCode == 200) return response.body;
@@ -90,19 +70,15 @@ class CatsService {
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
 
-   Future updateCat(Uint8List? image, Cat cat, {String? authorization}) async {
+   Future updateApplication(Application application, {String? authorization}) async {
     final http.Response response = await http.put(
-      Uri.parse("$serviceBaseUrl/${cat.id}"),
+      Uri.parse("$serviceBaseUrl/${application.id}"),
       headers: <String, String>{
         if (authorization != null) 
           HttpHeaders.authorizationHeader: authorization,
         HttpHeaders.contentTypeHeader: "application/json; charset=UTF-8",
       },
-      body: jsonEncode(<String, dynamic>{
-        ...cat.toJson(),
-        if (image != null)
-          'image': base64Encode(image)
-      })
+      body: jsonEncode(application.toJson())
     );
 
     if (response.statusCode != 200) throw PlatformException(code: response.statusCode.toString(), message: response.body);

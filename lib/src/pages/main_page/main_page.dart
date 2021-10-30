@@ -1,6 +1,8 @@
 import 'package:adopte_un_matou/models/page_item.dart';
 import 'package:adopte_un_matou/src/pages/main_page/widgets/menu_drawer.dart';
+import 'package:adopte_un_matou/src/provider/controller/applications_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
 import 'package:adopte_un_matou/src/utils/app_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,7 +35,10 @@ class MainPageState extends ConsumerState<MainPage> {
   void initState() {
     super.initState();
 
-    ref.read(catsControllerProvider.notifier).loadData();
+    final String? authenticationHeaders = ref.read(userControllerProvider).user?.authenticationHeader;
+
+    ref.read(catsControllerProvider.notifier).loadData(authenticationHeader: authenticationHeaders);
+    ref.read(applicationsControllerProvider.notifier).loadData(authenticationHeader: authenticationHeaders);
   }
 
   @override
@@ -72,7 +77,7 @@ class MainPageState extends ConsumerState<MainPage> {
                         child: ClipRect(
                           child: Navigator(
                             key: AppManager.instance.appNavigatorKey,
-                            onGenerateRoute: (route) => MaterialPageRoute(
+                            onGenerateRoute: (route) => MaterialPageRoute<dynamic>(
                               settings: route,
                               builder: (context) => Scaffold(
                                 body: Stack(

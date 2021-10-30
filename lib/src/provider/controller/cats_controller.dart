@@ -20,28 +20,37 @@ class CatsController extends StateNotifier<AdoptionCatsState> {
 
     state = state.copyWidth(cats: const AsyncValue.loading());
 
-    List<Cat> cats = await CatsService.instance.getCats(authorization: authenticationHeader);
+    try {
+      Map<String, Cat> cats = await CatsService.instance.getCats(authorization: authenticationHeader);
     
-    state = state.copyWidth(
-      cats: AsyncValue.data(cats)
-    );
+      state = state.copyWidth(
+        cats: AsyncValue.data(cats)
+      );
+    }
+    on Exception catch(e) {
+      state = state.copyWidth(
+        cats: AsyncValue.error(e, previous: state.cats.asData)
+      );
+    }
   }
 
   void addCat(Cat cat) {
+    if (cat.id == null)  return;
+
     state = state.copyWidth(
-      cats: AsyncValue.data([
+      cats: AsyncValue.data({
         ...state.cats.asData!.value,
-        cat
-      ])
+        cat.id!: cat
+      })
     );
   }
 
   void updateCat(Cat cat) {
+    if (cat.id == null) return;
+
+    state.cats.asData!.value[cat.id!] = cat;
     state = state.copyWidth(
-      cats: AsyncValue.data([
-        for (final oldCat in state.cats.asData!.value)
-          if (oldCat.id == cat.id) cat else oldCat
-      ])
+      cats: state.cats
     );
   }
 

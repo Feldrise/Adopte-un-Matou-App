@@ -88,7 +88,7 @@ class Cat {
     age = map['age'] as String? ?? "Unkown age",
     price = map['price'] as int? ?? -1,
     location = map['location'] as String? ?? "Unkown location",
-    properties = (map['properties'] as List<dynamic>? ?? []).cast<String>(),
+    properties = (map['properties'] as List<dynamic>? ?? <dynamic>[]).cast<String>(),
     description = map['description'] as String? ?? "Unknown description";
 
   Map<String, dynamic> toJson() {

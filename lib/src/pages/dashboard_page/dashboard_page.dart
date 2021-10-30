@@ -38,8 +38,8 @@ class DashboardPage extends ConsumerWidget {
               text: "Gérer les adoptions",
               catImage: "cat7", 
               onTap: () async {
-                await Navigator.of(context).push(
-                  MaterialPageRoute( 
+                await Navigator.of(context).push<dynamic>(
+                  MaterialPageRoute<dynamic>( 
                     builder: (context) => ManageAdoptionsPage(pageItems: pageItems, onPageChanged: onPageChanged)
                   )
                 );

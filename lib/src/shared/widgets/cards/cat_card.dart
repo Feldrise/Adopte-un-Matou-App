@@ -34,8 +34,8 @@ class _CatCardState extends ConsumerState<CatCard> {
       onTap: () async {
         final bool canEdit = ref.read(userControllerProvider).user?.role == UserRoles.admin;
 
-        await Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => ViewCatPage(cat: widget.cat, canEdit: canEdit,))
+        await Navigator.of(context).push<dynamic>(
+          MaterialPageRoute<dynamic>(builder: (context) => ViewCatPage(cat: widget.cat, canEdit: canEdit,))
         );
       },
       child: ClipRRect(

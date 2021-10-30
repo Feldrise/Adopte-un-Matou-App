@@ -15,6 +15,7 @@ class AUMTheme {
       backgroundColor: Palette.colorWhite,
       cardColor: Palette.colorWhite,
       scaffoldBackgroundColor: Palette.colorScaffold,
+      disabledColor: Palette.colorGrey4,
       dividerColor: Colors.black12,
 
       appBarTheme: const AppBarTheme(
@@ -29,6 +30,8 @@ class AUMTheme {
         headline1: GoogleFonts.raleway(fontSize: 35, color: Palette.colorBlack),
         headline2: GoogleFonts.raleway(fontSize: 28, color: Palette.colorBlack),
         headline3: GoogleFonts.raleway(fontSize: 26, color: Palette.colorBlack),
+        headline4: GoogleFonts.raleway(fontSize: 21, color: Palette.colorBlack),
+        headline5: GoogleFonts.raleway(fontSize: 18, color: Palette.colorBlack),
         button: GoogleFonts.raleway(fontSize: 13, fontWeight: FontWeight.w600, color: Palette.colorWhite)
       ),
             

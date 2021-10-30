@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/src/pages/administration/admin_main_page/admin_main_page.dart';
+import 'package:adopte_un_matou/src/pages/adoptants/adoptants_main_page/adoptants_main_page.dart';
 import 'package:adopte_un_matou/src/pages/authentication/authentication_home_page/authentication_home_page.dart';
 import 'package:adopte_un_matou/src/provider/controller/theme_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
@@ -50,6 +51,10 @@ class MyApp extends ConsumerWidget {
           if (user != null) {
             if (user.role == UserRoles.admin) {
               return AdminMainPage();
+            }
+
+            if (user.role == UserRoles.adoptant) {
+              return AdoptantsMainPage();
             }
 
             return Container();

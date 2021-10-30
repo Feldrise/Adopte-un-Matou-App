@@ -1,5 +1,4 @@
 import 'package:adopte_un_matou/src/pages/administration/adopted_cats_page/add_to_adopted_page/add_to_adopted_page.dart';
-import 'package:adopte_un_matou/src/pages/administration/adopted_cats_page/adopted_cats_page.dart';
 import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
 import 'package:adopte_un_matou/src/shared/widgets/cards/cat_card.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_status_message.dart';
@@ -42,9 +41,12 @@ class AdoptedList extends ConsumerWidget {
         );
       },
       loading: (data) => const Center(child: CircularProgressIndicator(),),
-      error: (error, stackTrace, data) => AmStatusMessage(
-        title: "Erreur",
-        message: "Une erreur est survenue : $error"
+      error: (error, stackTrace, data) => Align(
+        alignment: Alignment.topLeft,
+        child: AmStatusMessage(
+          title: "Erreur",
+          message: "Une erreur est survenue : $error"
+        ),
       )
     );
   }
@@ -108,8 +110,8 @@ class AdoptedList extends ConsumerWidget {
   }
 
   Future _addCatPressed(BuildContext context, WidgetRef ref) async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => const AddToAdoptedPage())
+    await Navigator.of(context).push<dynamic>(
+      MaterialPageRoute<dynamic>(builder: (context) => const AddToAdoptedPage())
     );
   }
 }
