@@ -1,14 +1,14 @@
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/services/authentication_service.dart';
-import 'package:adopte_un_matou/src/provider/states/user_state.dart';
+import 'package:adopte_un_matou/src/provider/states/app_user_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final userControllerProvider = StateNotifierProvider.autoDispose<UserController, UserState>((ref) {
-  return UserController(const UserState(user: null));
+final appUserControllerProvider = StateNotifierProvider.autoDispose<AppUserController, AppUserState>((ref) {
+  return AppUserController(const AppUserState(user: null));
 });
 
-class UserController extends StateNotifier<UserState> {
-  UserController(UserState state): super(state);
+class AppUserController extends StateNotifier<AppUserState> {
+  AppUserController(AppUserState state): super(state);
   
   Future loadFromSettings() async {
     final User? user = await AuthenticationService.instance.getLoggedUser();

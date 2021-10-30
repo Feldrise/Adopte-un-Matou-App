@@ -3,7 +3,7 @@ import 'package:adopte_un_matou/models/cat.dart';
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/services/applications_service.dart';
 import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
-import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/app_user_controller.dart';
 import 'package:adopte_un_matou/src/shared/widgets/am_button.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_status_message.dart';
 import 'package:adopte_un_matou/src/shared/widgets/inputs/am_textinput.dart';
@@ -100,8 +100,8 @@ class _ApplicationFormState extends ConsumerState<ApplicationForm> {
     super.initState();
 
     _cat = ref.read(catsControllerProvider).cats.asData?.value[widget.application?.catId] ?? widget.cat;
-    // _user = widget.application?.user ?? ref.read(userControllerProvider).user;
-    _user = ref.read(userControllerProvider).user; // TODO: users for application
+    // _user = widget.application?.user ?? ref.read(appUserControllerProvider).user;
+    _user = ref.read(appUserControllerProvider).user; // TODO: users for application
 
     for (final question in _questions.values) {
       if (question.type == ApplicationFieldTypes.radio) {
@@ -129,7 +129,7 @@ class _ApplicationFormState extends ConsumerState<ApplicationForm> {
 
   @override
   Widget build(BuildContext context) {
-    final bool userLoggedIn = ref.watch(userControllerProvider).user != null;
+    final bool userLoggedIn = ref.watch(appUserControllerProvider).user != null;
 
     if (_isLoading) {
       return const Center(
@@ -392,7 +392,7 @@ Widget _buildTextField({required TextEditingController controller, required Stri
         }
       );
 
-      String authorization = ref.read(userControllerProvider).user!.authenticationHeader;
+      String authorization = ref.read(appUserControllerProvider).user!.authenticationHeader;
       await ApplicationsService.instance.createApplication(application, authorization: authorization);
 
       setState(() {

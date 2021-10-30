@@ -2,7 +2,7 @@ import 'package:adopte_un_matou/models/page_item.dart';
 import 'package:adopte_un_matou/src/pages/administration/admin_main_page/admin_main_page.dart';
 import 'package:adopte_un_matou/src/pages/dashboard_page/manage_adoptions_page/manage_adoptions_page.dart';
 import 'package:adopte_un_matou/src/pages/dashboard_page/widgets/dashboard_card.dart';
-import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/app_user_controller.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_app_bar.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +69,7 @@ class DashboardPage extends ConsumerWidget {
               text: "Se déconnecter",
               catImage: "cat11", 
               onTap: () {
-                ref.read(userControllerProvider.notifier).logout();
+                ref.read(appUserControllerProvider.notifier).logout();
               },
             ),
             // const SizedBox(height: 32,)

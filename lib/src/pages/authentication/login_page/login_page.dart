@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/services/authentication_service.dart';
 import 'package:adopte_un_matou/src/pages/authentication/login_page/widgets/login_form.dart';
-import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/app_user_controller.dart';
 import 'package:adopte_un_matou/src/shared/widgets/am_button.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_status_message.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
       });
 
       final User loggedUser = await AuthenticationService.instance.login(_emailTextController.text, _passwordTextController.text);
-      ref.read(userControllerProvider.notifier).loginUser(loggedUser);
+      ref.read(appUserControllerProvider.notifier).loginUser(loggedUser);
       
       Navigator.of(context).pop();
     } 

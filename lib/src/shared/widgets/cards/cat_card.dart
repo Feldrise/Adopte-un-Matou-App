@@ -1,7 +1,7 @@
 import 'package:adopte_un_matou/models/cat.dart';
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/src/pages/view_cat_page/view_cat_page.dart';
-import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/app_user_controller.dart';
 import 'package:adopte_un_matou/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -32,7 +32,7 @@ class _CatCardState extends ConsumerState<CatCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        final bool canEdit = ref.read(userControllerProvider).user?.role == UserRoles.admin;
+        final bool canEdit = ref.read(appUserControllerProvider).user?.role == UserRoles.admin;
 
         await Navigator.of(context).push<dynamic>(
           MaterialPageRoute<dynamic>(builder: (context) => ViewCatPage(cat: widget.cat, canEdit: canEdit,))

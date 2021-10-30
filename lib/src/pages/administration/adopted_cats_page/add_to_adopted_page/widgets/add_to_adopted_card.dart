@@ -1,7 +1,7 @@
 import 'package:adopte_un_matou/models/cat.dart';
 import 'package:adopte_un_matou/services/cats_service.dart';
 import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
-import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/app_user_controller.dart';
 import 'package:adopte_un_matou/src/shared/widgets/am_button.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_status_message.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
@@ -123,7 +123,7 @@ class _AddToAdoptedCartState extends ConsumerState<AddToAdoptedCart> {
     final Cat cat = widget.cat.copyWith(adoptionStatus: CatAdoptionStatus.adopted);
 
     try {
-      final String? authorization = ref.read(userControllerProvider).user?.authenticationHeader;
+      final String? authorization = ref.read(appUserControllerProvider).user?.authenticationHeader;
 
       await CatsService.instance.updateCat(null, cat, authorization: authorization);
 

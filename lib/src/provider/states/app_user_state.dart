@@ -2,21 +2,21 @@ import 'package:adopte_un_matou/models/user.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class UserState {
+class AppUserState {
   final bool loadedAtStartup;
   final User? user;
 
-  const UserState({
+  const AppUserState({
     this.user,
     this.loadedAtStartup = false
   });
 
-  UserState copyWidth({
+  AppUserState copyWidth({
     User? user,
     bool? loadedAtStartup,
   }) {
     if (this.user != null) {
-      return UserState(
+      return AppUserState(
         user: user != null ? this.user!.copyWith(
           id: user.id,
           firstName: user.firstName,
@@ -28,7 +28,7 @@ class UserState {
       );
     }
 
-    return UserState(
+    return AppUserState(
       user: user ?? this.user,
       loadedAtStartup: loadedAtStartup ?? this.loadedAtStartup
     );

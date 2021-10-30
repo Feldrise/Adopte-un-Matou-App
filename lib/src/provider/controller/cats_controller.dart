@@ -4,7 +4,7 @@ import 'package:adopte_un_matou/src/provider/states/cats_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final catsControllerProvider = StateNotifierProvider.autoDispose<CatsController, AdoptionCatsState>((ref) {
-  // User? appUser = ref.watch(userControllerProvider).user;
+  // User? appUser = ref.watch(appUserControllerProvider).user;
 
   // List<Cat> adoptionCats = await CatsService.instance.getCats(authorization: appUser?.authenticationHeader);
   return CatsController(

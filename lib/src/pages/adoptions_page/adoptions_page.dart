@@ -1,7 +1,7 @@
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/src/pages/adoptions_page/widgets/adoptions_list.dart';
 import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
-import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/app_user_controller.dart';
 import 'package:adopte_un_matou/src/shared/widgets/am_button.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_app_bar.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
@@ -21,7 +21,7 @@ class _AdoptionsPageState extends ConsumerState<AdoptionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = ref.watch(userControllerProvider).user;
+    final User? user = ref.watch(appUserControllerProvider).user;
     bool canEdit = false;
 
     if (user != null) {

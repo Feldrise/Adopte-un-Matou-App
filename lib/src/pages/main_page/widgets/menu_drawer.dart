@@ -1,7 +1,7 @@
 import 'package:adopte_un_matou/models/page_item.dart';
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/src/provider/controller/theme_controller.dart';
-import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/app_user_controller.dart';
 import 'package:adopte_un_matou/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -71,7 +71,7 @@ class MenuDrawer extends ConsumerWidget {
   }
 
   Widget _buildUserWidget(WidgetRef ref) {
-    final User? user = ref.watch(userControllerProvider).user;
+    final User? user = ref.watch(appUserControllerProvider).user;
 
     if (user == null) {
       return Container();
@@ -151,7 +151,7 @@ class MenuDrawer extends ConsumerWidget {
   Widget _buildLogoutButton(WidgetRef ref) {
     return InkWell(
       onTap: () async {
-        await ref.read(userControllerProvider.notifier).logout();
+        await ref.read(appUserControllerProvider.notifier).logout();
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),

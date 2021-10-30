@@ -6,7 +6,7 @@ import 'package:adopte_un_matou/services/cats_service.dart';
 import 'package:adopte_un_matou/src/pages/application_page/application_page.dart';
 import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/image_controller.dart';
-import 'package:adopte_un_matou/src/provider/controller/user_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/app_user_controller.dart';
 import 'package:adopte_un_matou/src/provider/states/image_state.dart';
 import 'package:adopte_un_matou/src/shared/widgets/am_button.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_app_bar.dart';
@@ -363,7 +363,7 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
           else 
             Text(widget.cat?.description ?? "Description"),
 
-          if (ref.watch(userControllerProvider).user == null || ref.watch(userControllerProvider).user?.role == UserRoles.adoptant) ...{
+          if (ref.watch(appUserControllerProvider).user == null || ref.watch(appUserControllerProvider).user?.role == UserRoles.adoptant) ...{
             const SizedBox(height: 24,),
             AmButton(
               text: "Je veux l'adopter",
@@ -449,7 +449,7 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
     );
 
     try {
-      final String? authorization = ref.read(userControllerProvider).user?.authenticationHeader;
+      final String? authorization = ref.read(appUserControllerProvider).user?.authenticationHeader;
 
       final String id = await CatsService.instance.createCat(_image, cat, authorization: authorization);
 
@@ -499,7 +499,7 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
     );
 
     try {
-      final String? authorization = ref.read(userControllerProvider).user?.authenticationHeader;
+      final String? authorization = ref.read(appUserControllerProvider).user?.authenticationHeader;
 
       await CatsService.instance.updateCat(_imageUpdated ? _image : null, cat, authorization: authorization);
 
@@ -528,7 +528,7 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
     final Cat cat = widget.cat!.copyWith(adoptionStatus: CatAdoptionStatus.adopted);
 
     try {
-      final String? authorization = ref.read(userControllerProvider).user?.authenticationHeader;
+      final String? authorization = ref.read(appUserControllerProvider).user?.authenticationHeader;
 
       await CatsService.instance.updateCat(null, cat, authorization: authorization);
 
