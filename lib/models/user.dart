@@ -70,11 +70,11 @@ class User {
 
   User.fromMap(Map<String, dynamic> map) : 
   id = map['id'] as String,
-  firstName = map['firstName'] as String,
-  lastName = map['lastName'] as String,
-  email = map['email'] as String,
-  role = map['role'] as String,
-  token = map['token'] as String;
+  firstName = map['firstName'] as String? ?? "Unknown",
+  lastName = map['lastName'] as String? ?? "Unknown",
+  email = map['email'] as String? ?? "Unknown",
+  role = map['role'] as String? ?? "Unknown",
+  token = map['token'] as String? ?? "Unknown";
 
   Map<String, dynamic> toJson() {
     return <String, dynamic> {

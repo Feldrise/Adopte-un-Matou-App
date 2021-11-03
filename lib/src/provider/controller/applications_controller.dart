@@ -30,4 +30,14 @@ class ApplicationsController extends StateNotifier<ApplicationsState> {
       );
     }
   }
+
+  void updateApplication(Application application) {
+    if (application.id == null) return;
+
+    state.applications.asData!.value[application.id!] = application;
+    state = state.copyWith(
+      applications: state.applications
+    );
+  }
+
 }

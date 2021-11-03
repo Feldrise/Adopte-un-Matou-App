@@ -2,6 +2,7 @@ import 'package:adopte_un_matou/models/application.dart';
 import 'package:adopte_un_matou/models/cat.dart';
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/services/applications_service.dart';
+import 'package:adopte_un_matou/src/provider/controller/applications_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/app_user_controller.dart';
 import 'package:adopte_un_matou/src/shared/widgets/am_button.dart';
@@ -10,16 +11,22 @@ import 'package:adopte_un_matou/src/shared/widgets/inputs/am_textinput.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ApplicationForm extends ConsumerStatefulWidget {
   const ApplicationForm({
     Key? key,
     this.application,
     this.cat,
+    this.user,
+    this.isEditing = true,
   }) : super(key: key);
 
   final Application? application;
   final Cat? cat;
+  final User? user;
+
+  final bool isEditing;
 
   @override
   ConsumerState<ApplicationForm> createState() => _ApplicationFormState();
@@ -101,7 +108,12 @@ class _ApplicationFormState extends ConsumerState<ApplicationForm> {
 
     _cat = ref.read(catsControllerProvider).cats.asData?.value[widget.application?.catId] ?? widget.cat;
     // _user = widget.application?.user ?? ref.read(appUserControllerProvider).user;
-    _user = ref.read(appUserControllerProvider).user; // TODO: users for application
+    if (widget.user != null) {
+      _user = widget.user;
+    }
+    else {
+      _user = ref.read(appUserControllerProvider).user;
+    }
 
     for (final question in _questions.values) {
       if (question.type == ApplicationFieldTypes.radio) {
@@ -110,7 +122,7 @@ class _ApplicationFormState extends ConsumerState<ApplicationForm> {
         );
       }
       else if (question.type == ApplicationFieldTypes.text) {
-        _questions[question.id] == question.copyWith(
+        _questions[question.id] = question.copyWith(
           value: TextEditingController(text: ((widget.application?.questions[question.id]?.value as String?) ?? ""))
         );
       }
@@ -123,7 +135,7 @@ class _ApplicationFormState extends ConsumerState<ApplicationForm> {
     _addressController.text = widget.application?.address ?? "";
     _adultsNumberController.text = widget.application?.adultsNumber ?? "";
     _adultsAgeController.text = widget.application?.adultsAge ?? "";
-    _childrenNumberController.text = widget.application?.childrenAge ?? "";
+    _childrenNumberController.text = widget.application?.childrenNumber ?? "";
     _childrenAgeController.text = widget.application?.childrenAge ?? "";
   }
 
@@ -152,109 +164,76 @@ class _ApplicationFormState extends ConsumerState<ApplicationForm> {
           Text("Identité", style: Theme.of(context).textTheme.headline5,),
           const SizedBox(height: 12,),
           _buildRow(
-             AmTextInput(
-              controller: _lastNameController,
-              labelText: "Nom *",
+            _buildTextField(
+              controller: _lastNameController, 
+              question: "Nom", 
               hintText: "Exemple : DENIS",
-              readOnly: userLoggedIn,
-              validator: (value) {
-                if (value.isEmpty) return "Vous devez rentrer un nom";
-                return null; 
-              },
+              mandatory: true,
+              readOnly: userLoggedIn
             ),
-            AmTextInput(
+            _buildTextField(
               controller: _firstNameController,
-              labelText: "Prénom *",
-              hintText: "Exemple: Victor",
-              readOnly: userLoggedIn,
-              validator: (value) {
-                if (value.isEmpty) {
-                  if (value.isEmpty) return "Vous devez rentrer un prénom";
-                  return null;
-                }
-              },
-            ),
+              question: "Prénom",
+              hintText: "Exemple : Victor",
+              mandatory: true,
+              readOnly: userLoggedIn
+            )
           ),
           const SizedBox(height: 12),
           _buildRow(
-            AmTextInput(
+            _buildTextField(
               controller: _phoneController,
-              labelText: "Numéro de téléphone *",
+              question: "Numéro de téléphone",
               hintText: "Exemple : 0652809335",
-              validator: (value) {
-                // TODO: phone validation
-                if (value.isEmpty) return "Vous devez rentrer un numéro";
-                return null;
-              },
+              mandatory: true
             ),
-            AmTextInput(
+            _buildTextField(
               controller: _emailController,
-              labelText: "Adresse de messagerie *",
+              question: "Adresse de messagerie",
               hintText: "Exemple : admin@feldrise.com",
               readOnly: userLoggedIn,
-              validator: (value) {
-                // TODO: email validation
-                if (value.isEmpty) return "Vous devez rentrer un mail";
-                return null;
-              },
+              mandatory: true
             )
           ),
           const SizedBox(height: 12,),
-          Flexible(
-            child: AmTextInput(
-              controller: _addressController,
-              labelText: "Adresse *",
-              hintText: "Exemple : 15 rue de Paris - 75000 Paris",
-              validator: (value) {
-                if (value.isEmpty) return "Vous devez rentrer un adresse";
-                return null;
-              },
-            ),
+          _buildTextField(
+            controller: _addressController,
+            question: "Adresse",
+            hintText: "Exemple : 15 rue de Paris - 75000 Paris",
+            mandatory: true
           ),
           const SizedBox(height: 12,),
           _buildRow(
-            AmTextInput(
+            _buildTextField(
               controller: _adultsNumberController,
-              labelText: "Nombre d'adultes *",
+              question: "Nombre d'adultes",
               hintText: "Exemple : 1",
-              inputType: TextInputType.number,
-              validator: (value) {
-                if (value.isEmpty) return "Vous devez rentrer une valeur";
-                return null;
-              },
+              // inputType: TextInputType.number,
+              mandatory: true
             ),
-            AmTextInput(
+            _buildTextField(
               controller: _adultsAgeController,
-              labelText: "Age des adultes *",
+              question: "Age des adultes",
               hintText: "Exemple : 25",
-              inputType: TextInputType.number,
-              validator: (value) {
-                if (value.isEmpty) return "Vous devez rentrer une valeur";
-                return null;
-              },
+              // inputType: TextInputType.number,
+              mandatory: true
             )
           ),
           const SizedBox(height: 12,),
           _buildRow(
-            AmTextInput(
+            _buildTextField(
               controller: _childrenNumberController,
-              labelText: "Nombre d'enfants *",
+              question: "Nombre d'enfants",
               hintText: "Exemple : 0",
-              inputType: TextInputType.number,
-              validator: (value) {
-                if (value.isEmpty) return "Vous devez rentrer un nombre";
-                return null;
-              },
+              // inputType: TextInputType.number,
+              mandatory: true
             ),
-            AmTextInput(
+            _buildTextField(
               controller: _childrenAgeController,
-              labelText: "Age des enfants",
+              question: "Age des enfants",
               hintText: "Exemple : 0",
-              inputType: TextInputType.number,
-              validator: (value) {
-                if (value.isEmpty) return "Vous devez renter un nombre";
-                return null;
-              },
+              // inputType: TextInputType.number,
+              mandatory: true
             )
           ),
           const SizedBox(height: 12,),
@@ -279,10 +258,11 @@ class _ApplicationFormState extends ConsumerState<ApplicationForm> {
               ),
             const SizedBox(height: 12,),
           },
-          AmButton(
-            text: "Valider",
-            onPressed: _submitApplication
-          ),
+          if (widget.isEditing)
+            AmButton(
+              text: "Valider",
+              onPressed: _submitApplication
+            ),
           const SizedBox(height: 24,)
         ],
       )
@@ -293,69 +273,102 @@ class _ApplicationFormState extends ConsumerState<ApplicationForm> {
     return Flexible(
       child: Row(
         children: [
-          Flexible(
-            child: input1
-          ),
+          input1,
           const SizedBox(width: 8,),
-          Flexible(
-            child: input2
-          )
+          input2
         ],
       ),
     );
   }
 
   Widget _buildRadioGroup({required String question, required List<String> options, required int currentValue, required Function(int) onStateChanged}) {
+    if (widget.isEditing) {
+      return Flexible(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(question),
+            for (int i = 0; i < options.length; ++i) 
+              Flexible(
+                child: Row(
+                  children: [
+                    Radio<int>(
+                      visualDensity: VisualDensity.compact,
+                      value: i,
+                      activeColor: Theme.of(context).primaryColor,
+                      groupValue: currentValue,
+                      onChanged: (value) {
+                        setState(() {
+                          onStateChanged(value ?? i);
+                        });
+                      },
+                    ),
+                    Flexible(
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            onStateChanged(i);
+                          });
+                        },
+                        child: Text(options[i])
+                      ),
+                    )
+                  ],
+                ),
+              )
+          ]
+        ),
+      );
+    }
+
     return Flexible(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(question),
-          for (int i = 0; i < options.length; ++i) 
-            Flexible(
-              child: Row(
-                children: [
-                  Radio<int>(
-                    visualDensity: VisualDensity.compact,
-                    value: i,
-                    activeColor: Theme.of(context).primaryColor,
-                    groupValue: currentValue,
-                    onChanged: (value) {
-                      setState(() {
-                        onStateChanged(value ?? i);
-                      });
-                    },
-                  ),
-                  Flexible(
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          onStateChanged(i);
-                        });
-                      },
-                      child: Text(options[i])
-                    ),
-                  )
-                ],
-              ),
-            )
-        ]
+          Flexible(
+            child: Text(question, style: GoogleFonts.raleway(fontWeight: FontWeight.bold,)),
+          ),
+          const SizedBox(height: 8,),
+          Flexible(
+            child: Text(options[currentValue]),
+          )
+        ],
       ),
     );
   }
 
-Widget _buildTextField({required TextEditingController controller, required String question, required String hintText, bool mandatory = false}) {
-    return Flexible(
-      child: AmTextInput(
-        controller: controller,
-        labelText: question,
-        hintText: hintText,
-        validator: mandatory ? (value) {
-          if (value.isEmpty) return "Ce champs est requis";
-          return null;
-        } : null,
-      )
+  Widget _buildTextField({required TextEditingController controller, required String question, required String hintText, bool mandatory = false, bool readOnly = false}) {
+    if (widget.isEditing) {
+      return Flexible(
+        child: AmTextInput(
+          controller: controller,
+          labelText: question,
+          hintText: hintText,
+          readOnly: readOnly,
+          validator: mandatory ? (value) {
+            if (value.isEmpty) return "Ce champs est requis";
+            return null;
+          } : null,
+        )
+      );
+    }
+
+      return Flexible(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Flexible(
+            child: Text(question, style: GoogleFonts.raleway(fontWeight: FontWeight.bold,)),
+          ),
+          const SizedBox(height: 8,),
+          Flexible(
+            child: Text(controller.text),
+          )
+        ],
+      ),
     );
   }
 
@@ -369,11 +382,11 @@ Widget _buildTextField({required TextEditingController controller, required Stri
     });
 
     try {
-      Application application = Application(null,
+      Application application = Application(widget.application?.id,
         userId: _user?.id ?? "Unknwon",
         catId: _cat!.id!,
         date: DateTime.now(),
-        step: "Sent",
+        step: widget.application?.step ?? "Sent",
         phone: _phoneController.text,
         address: _addressController.text,
         adultsNumber: _adultsNumberController.text,
@@ -393,7 +406,17 @@ Widget _buildTextField({required TextEditingController controller, required Stri
       );
 
       String authorization = ref.read(appUserControllerProvider).user!.authenticationHeader;
-      await ApplicationsService.instance.createApplication(application, authorization: authorization);
+
+      if (widget.application == null) {
+        await ApplicationsService.instance.createApplication(application, authorization: authorization);  
+      }
+      else {
+        await ApplicationsService.instance.updateApplication(application, authorization: authorization);
+
+        ref.read(applicationsControllerProvider.notifier).updateApplication(
+          application.copyWith(questions: {})
+        );
+      }
 
       setState(() {
         _isLoading = false;
@@ -405,7 +428,7 @@ Widget _buildTextField({required TextEditingController controller, required Stri
     on PlatformException catch(e) {
       setState(() {
         _isLoading = false;
-        _errorMessage = "Impossible d'envoyer la candidature : ${e.code} ; ${e.message}";
+        _errorMessage = "Impossible d'envoyer ou mettre à jour la candidature : ${e.code} ; ${e.message}";
       });
     }
     on Exception catch(e) {

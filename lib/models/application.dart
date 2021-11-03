@@ -2,6 +2,20 @@ import 'package:flutter/foundation.dart';
 
 enum ApplicationFieldTypes { downloaded, title, radio, text }
 
+mixin ApplicationStep {
+  static const String sent = "Sent";
+  static const String meeting = "Meeting";
+  static const String fillingFile = "FillingFile";
+  static const String done = "Done";
+
+  static const Map<String, String> detailed = {
+    sent: "01 - Formulaire envoyé",
+    meeting: "02 - RDV avec la famille d'accueil",
+    fillingFile: "03 - Dossier d'adoption à remplir",
+    done: "04 - Adoption terminé",
+  };
+}
+
 @immutable 
 class ApplicationQuestion {
   final String id;
@@ -128,7 +142,7 @@ class Application {
     userId = map['userId'] as String? ?? "Unkown",
     catId = map['catId'] as String? ?? "Unknown",
     date = DateTime.tryParse(map['date'] as String? ?? "Unknown") ?? DateTime.now(),
-    step = map['currentStep'] as String? ?? "Unknwown",
+    step = map['applicationStep'] as String? ?? "Unknwown",
     phone = map['phoneNumber'] as String? ?? "Unknown",
     address = map['address'] as String? ?? "Unknown",
     adultsNumber = map['adultsNumber'] as String? ?? "Unknown",
@@ -136,10 +150,10 @@ class Application {
     childrenNumber = map['childrenNumber'] as String? ?? "Unknwon",
     childrenAge = map['childrenAge'] as String? ?? "Unknown",
     questions = {} {
-      final List<Map<String, dynamic>> questionsList = (map['question'] as List<dynamic>? ?? <dynamic>[]).cast();
+      final List<Map<String, dynamic>> questionsList = (map['questions'] as List<dynamic>? ?? <dynamic>[]).cast();
 
       for (final questionMap in questionsList) {
-        questions[questionMap['id'] as String? ?? "Unknown"] = ApplicationQuestion.fromMap(questionMap);
+        questions[questionMap['questionId'] as String? ?? "Unknown"] = ApplicationQuestion.fromMap(questionMap);
       }
     }
 

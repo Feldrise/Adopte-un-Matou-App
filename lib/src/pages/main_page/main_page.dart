@@ -1,8 +1,10 @@
 import 'package:adopte_un_matou/models/page_item.dart';
+import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/src/pages/main_page/widgets/menu_drawer.dart';
 import 'package:adopte_un_matou/src/provider/controller/applications_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/app_user_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/users_controller.dart';
 import 'package:adopte_un_matou/src/utils/app_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,6 +41,7 @@ class MainPageState extends ConsumerState<MainPage> {
 
     ref.read(catsControllerProvider.notifier).loadData(authenticationHeader: authenticationHeaders);
     ref.read(applicationsControllerProvider.notifier).loadData(authenticationHeader: authenticationHeaders);
+    ref.read(usersControllerProvider.notifier).loadData(authenticationHeader: authenticationHeaders, shouldIncludeSensitiveInfo: ref.read(appUserControllerProvider).user?.role == UserRoles.admin);
   }
 
   @override
