@@ -4,6 +4,8 @@ import 'package:adopte_un_matou/models/cat.dart';
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/services/cats_service.dart';
 import 'package:adopte_un_matou/src/pages/application_page/application_page.dart';
+import 'package:adopte_un_matou/src/pages/view_cat_page/widgets/cat_properties_dialog.dart';
+import 'package:adopte_un_matou/src/pages/view_cat_page/widgets/cat_properties_list.dart';
 import 'package:adopte_un_matou/src/provider/controller/cats_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/image_controller.dart';
 import 'package:adopte_un_matou/src/provider/controller/app_user_controller.dart';
@@ -46,6 +48,8 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
   Uint8List? _image;
   bool _imageUpdated = false;
 
+  final List<String> _properties = [];
+
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
@@ -66,6 +70,9 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
     _ageController.text = widget.cat?.age ?? "";
     _priceController.text = widget.cat?.price.toString() ?? "";
     if (widget.cat != null) {
+      _properties.clear();
+      _properties.addAll(widget.cat!.properties);
+
       final ImageProvider? imageProvider = ref.read(widget.cat!.image).image?.asData?.value;
 
       if (imageProvider is MemoryImage) {
@@ -86,6 +93,9 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
     _ageController.text = widget.cat?.age ?? "";
     _priceController.text = widget.cat?.price.toString() ?? "";
     if (widget.cat != null) {
+      _properties.clear();
+      _properties.addAll(widget.cat!.properties);
+      
       final ImageProvider? imageProvider = ref.read(widget.cat!.image).image?.asData?.value;
 
       if (imageProvider is MemoryImage) {
@@ -349,6 +359,19 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
               style: Theme.of(context).textTheme.headline3,
             ),
           const SizedBox(height: 16.0,),
+          Flexible(
+            child: CatPropertiesList(
+              properties: _properties, 
+              isEditing: _isEditing,
+              onRemoveProperty: (value) {
+                setState(() {
+                  _properties.remove(value);
+                });
+              },
+              onAddProperties: _changeProperties,
+            ),
+          ),
+          const SizedBox(height: 16.0,),
           if (_isEditing) 
             AmTextInput(
               controller: _descriptionController, 
@@ -419,6 +442,20 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
     });
   }
 
+  Future _changeProperties() async {
+    final newProperties = await showDialog<List<String>?>(
+      context: context, 
+      builder: (context) => CatPropertiesDialog(initialProperties: _properties)
+    );
+
+    if (newProperties != null) {
+      setState(() {
+        _properties.clear();
+        _properties.addAll(newProperties);
+      });
+    }
+  }
+
   Future _createCat() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -444,7 +481,7 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
       age: _ageController.text,
       price: int.parse(_priceController.text),
       location: _locationController.text,
-      properties: const [],
+      properties: _properties,
       description: _descriptionController.text
     );
 
@@ -494,7 +531,7 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
       age: _ageController.text,
       price: int.parse(_priceController.text),
       location: _locationController.text,
-      properties: const [],
+      properties: _properties,
       description: _descriptionController.text
     );
 

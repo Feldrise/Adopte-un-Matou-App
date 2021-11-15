@@ -1,3 +1,4 @@
+import 'package:adopte_un_matou/presentation/a_u_m_icons_icons.dart';
 import 'package:adopte_un_matou/services/cats_service.dart';
 import 'package:adopte_un_matou/src/provider/controller/image_controller.dart';
 import 'package:adopte_un_matou/src/provider/states/image_state.dart';
@@ -15,6 +16,27 @@ mixin CatAdoptionStatus {
     adopted: "Adopté"
   };
 }
+
+final Map<String, IconData> catPropertiesIcon = {
+  'Outdoor': AUMIcons.outdoor,
+  'ForbiddenOutdoor': AUMIcons.forbiddenoutdoor,
+  'People': AUMIcons.people,
+  'ForbiddenPeople': AUMIcons.forbiddenalonepeople,
+  // Missing children
+  'OldPeople': AUMIcons.oldpeople,
+  'FobiddenOldPeople': AUMIcons.forbiddenoldpeople,
+  'Baby': AUMIcons.baby,
+  'FobiddenBabies': AUMIcons.forbiddenbabies,
+  'Cat': AUMIcons.cat,
+  'ForbiddenCats': AUMIcons.forbiddencats,
+  'Dog': AUMIcons.dog,
+  'ForbiddenDogs': AUMIcons.forbiddendogs,
+  'Sterilized': AUMIcons.sterilized,
+  // Not Sterilized
+  'Vaccinated': AUMIcons.vaccination,
+  'NotVaccinated': AUMIcons.notvaccinated,
+  'Identification': AUMIcons.identification,
+};
 
 @immutable
 class Cat {
