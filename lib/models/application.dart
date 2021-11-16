@@ -14,6 +14,13 @@ mixin ApplicationStep {
     fillingFile: "03 - Dossier d'adoption à remplir",
     done: "04 - Adoption terminé",
   };
+
+  static const Map<String, int> number = {
+    sent: 1,
+    meeting: 2,
+    fillingFile: 3,
+    done: 4
+  };
 }
 
 @immutable 

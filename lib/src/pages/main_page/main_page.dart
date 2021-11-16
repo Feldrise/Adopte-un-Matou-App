@@ -38,9 +38,11 @@ class MainPageState extends ConsumerState<MainPage> {
     super.initState();
 
     final String? authenticationHeaders = ref.read(appUserControllerProvider).user?.authenticationHeader;
+    final String userId = ref.read(appUserControllerProvider).user?.id ?? '';
 
     ref.read(catsControllerProvider.notifier).loadData(authenticationHeader: authenticationHeaders);
     ref.read(applicationsControllerProvider.notifier).loadData(authenticationHeader: authenticationHeaders);
+    ref.read(applicationsControllerProvider.notifier).loadUserApplicationData(userId, authenticationHeader: authenticationHeaders);
     ref.read(usersControllerProvider.notifier).loadData(authenticationHeader: authenticationHeaders, shouldIncludeSensitiveInfo: ref.read(appUserControllerProvider).user?.role == UserRoles.admin);
   }
 

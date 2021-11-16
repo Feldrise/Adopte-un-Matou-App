@@ -3,9 +3,12 @@ import 'package:adopte_un_matou/services/applications_service.dart';
 import 'package:adopte_un_matou/src/provider/states/applications_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final applicationsControllerProvider = StateNotifierProvider.autoDispose<ApplicationsController, ApplicationsState>((ref) {
+final applicationsControllerProvider = StateNotifierProvider<ApplicationsController, ApplicationsState>((ref) {
   return ApplicationsController(
-    const ApplicationsState(applications: AsyncValue.loading())
+    const ApplicationsState(
+      applications: AsyncValue.loading(),
+      userApplication: AsyncValue.loading(),
+    )
   );
 });
 
@@ -30,6 +33,26 @@ class ApplicationsController extends StateNotifier<ApplicationsState> {
       );
     }
   }
+
+  Future loadUserApplicationData(String userId, {String? authenticationHeader, bool refresh = false}) async {
+    if (state.userApplication.asData != null && !refresh) return;
+
+    state = state.copyWith(userApplication: const AsyncValue.loading());
+
+    try {
+      Application? application = await ApplicationsService.instance.getUserApplication(userId, authorization: authenticationHeader);
+
+      state = state.copyWith(
+        userApplication: AsyncValue.data(application)
+      );
+    }
+    on Exception catch(e) {
+      state = state.copyWith(
+       userApplication: AsyncValue.error(e, previous: state.userApplication.asData)
+      );
+    }
+  }
+
 
   void updateApplication(Application application) {
     if (application.id == null) return;

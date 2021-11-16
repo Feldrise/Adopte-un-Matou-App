@@ -3,6 +3,7 @@ import 'package:adopte_un_matou/presentation/a_u_m_icons_icons.dart';
 import 'package:adopte_un_matou/src/pages/administration/adopted_cats_page/adopted_cats_page.dart';
 import 'package:adopte_un_matou/src/pages/adoptants/adoptants_main_page/widgets/adoptants_bottom_bar.dart';
 import 'package:adopte_un_matou/src/pages/adoptions_page/adoptions_page.dart';
+import 'package:adopte_un_matou/src/pages/dashboard_page/dashboard_page.dart';
 import 'package:adopte_un_matou/src/pages/main_page/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -42,7 +43,12 @@ class AdoptantsMainPage extends StatelessWidget {
       //     mainPageKey.currentState!.selectPage(pageItem);
       //   },
       // ),
-      const Center(child: Text("Hello Adoptants Dashboard"),),
+      DashboardPage(
+        pageItems: pageItems,
+        onPageChanged: (pageItem) {
+          mainPageKey.currentState!.selectPage(pageItem);
+        },
+      ),
       const AdoptionsPage(),
       const AdoptedCatsPage(),
     ];

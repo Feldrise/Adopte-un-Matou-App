@@ -30,6 +30,28 @@ class ApplicationsService {
 
     throw PlatformException(code: response.statusCode.toString(), message: response.body);
   }
+  
+  Future<Application?> getUserApplication(String userId, {String? authorization}) async {
+    final http.Response response = await http.get(
+      Uri.parse("$serviceBaseUrl?userId=$userId"),
+      headers: <String, String>{
+        if (authorization != null)
+          HttpHeaders.authorizationHeader: authorization
+      } 
+    );
+
+    if (response.statusCode == 200) {
+      final applications = jsonDecode(response.body) as List<dynamic>;
+
+      if (applications.isNotEmpty) {
+        return Application.fromMap(applications[0] as Map<String, dynamic>);
+      }
+
+      return null;
+    }
+
+    throw PlatformException(code: response.statusCode.toString(), message: response.body);
+  }
 
   Future<Map<String, Application>> getApplications({String? authorization}) async {
     final http.Response response = await http.get(
