@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-enum ApplicationFieldTypes { downloaded, title, radio, text }
+enum ApplicationFieldTypes { downloaded, title, radio, checkbox, photo, text }
 
 mixin ApplicationStep {
   static const String sent = "Sent";
