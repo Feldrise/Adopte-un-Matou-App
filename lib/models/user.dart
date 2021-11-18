@@ -6,7 +6,8 @@ mixin UserRoles {
 
   static const Map<String, String> detailled = {
     admin: "Administrateur",
-    adoptant: "Adoptant"
+    adoptant: "Adoptant",
+
   };
 }
 

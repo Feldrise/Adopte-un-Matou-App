@@ -8,7 +8,7 @@ import 'package:adopte_un_matou/src/pages/administration/users_page/users_page.d
 import 'package:adopte_un_matou/src/pages/adoptions_page/adoptions_page.dart';
 import 'package:adopte_un_matou/src/pages/dashboard_page/dashboard_page.dart';
 import 'package:adopte_un_matou/src/pages/main_page/main_page.dart';
-import 'package:adopte_un_matou/src/pages/profile_page/profile_page.dart';
+import 'package:adopte_un_matou/src/pages/user_profile_page/user_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
@@ -72,7 +72,7 @@ class AdminMainPage extends StatelessWidget {
       const ApplicationsPage(),
       const UsersPage(),
       const DocumentsPage(),
-      const ProfilePage(),
+      const UserProfilePage(),
     ];
 
     return MainPage(
