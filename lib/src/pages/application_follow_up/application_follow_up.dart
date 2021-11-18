@@ -51,8 +51,8 @@ class ApplicationFollowUp extends StatelessWidget {
                 context, 
                 stepName: 'Etape 4', 
                 stepDetails: "L'étape 4", 
-                isLocked: (ApplicationStep.number[ApplicationStep.done] ?? 0) > (ApplicationStep.number[applicationStep] ?? 0),
-                isCurrent: applicationStep == ApplicationStep.done,
+                isLocked: (ApplicationStep.number[ApplicationStep.finished] ?? 0) > (ApplicationStep.number[applicationStep] ?? 0),
+                isCurrent: applicationStep == ApplicationStep.finished,
                 isLast: true
               ),
             ],

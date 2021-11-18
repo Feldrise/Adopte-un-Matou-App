@@ -51,7 +51,9 @@ class _ApplicationStepDialogState extends State<ApplicationStepDialog> {
                 items: ApplicationStep.detailed,
                 label: "Etape :",
                 onChanged: (value) {
-                  _step = value ?? ApplicationStep.sent;
+                  setState(() {
+                    _step = value ?? ApplicationStep.sent;
+                  });
                 },
               ),
             ),

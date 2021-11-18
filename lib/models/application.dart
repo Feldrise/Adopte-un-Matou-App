@@ -6,20 +6,23 @@ mixin ApplicationStep {
   static const String sent = "Sent";
   static const String meeting = "Meeting";
   static const String fillingFile = "FillingFile";
-  static const String done = "Done";
+  static const String finished = "Finished";
+  static const String refused = "Refused";
 
   static const Map<String, String> detailed = {
     sent: "01 - Formulaire envoyé",
     meeting: "02 - RDV avec la famille d'accueil",
     fillingFile: "03 - Dossier d'adoption à remplir",
-    done: "04 - Adoption terminé",
+    finished: "04 - Adoption accepté",
+    refused: "04 - Adoption refusé",
   };
 
   static const Map<String, int> number = {
     sent: 1,
     meeting: 2,
     fillingFile: 3,
-    done: 4
+    finished: 4,
+    refused: 6
   };
 }
 
