@@ -59,7 +59,7 @@ class UsersService {
       headers: <String, String>{
         if (authorization != null) 
           HttpHeaders.authorizationHeader: authorization,
-        HttpHeaders.contentTypeHeader: "user/json; charset=UTF-8",
+        HttpHeaders.contentTypeHeader: "application/json; charset=UTF-8",
       },
       body: jsonEncode(user.toJson())
     );

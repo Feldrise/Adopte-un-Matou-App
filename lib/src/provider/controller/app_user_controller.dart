@@ -13,15 +13,23 @@ class AppUserController extends StateNotifier<AppUserState> {
   Future loadFromSettings() async {
     final User? user = await AuthenticationService.instance.getLoggedUser();
 
-    state = state.copyWidth(user: user, loadedAtStartup: true);
+    state = state.copyWith(user: user, loadedAtStartup: true);
   }
   void loginUser(User? loggedUser) {
-    state = state.copyWidth(user: loggedUser, loadedAtStartup: true);
+    state = state.copyWith(user: loggedUser, loadedAtStartup: true);
   }
 
   Future logout() async {
     await AuthenticationService.instance.logoutUser();
-    state = state.copyWidth(user: null, loadedAtStartup: true);
+    state = state.copyWith(user: null, loadedAtStartup: true);
+  }
+
+  void updateUser(User user) {
+    if (user.id == null) return;
+
+    state = state.copyWith(
+      user: user
+    );
   }
 
 }

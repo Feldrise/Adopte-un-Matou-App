@@ -1,11 +1,16 @@
 import 'package:adopte_un_matou/models/user.dart';
+import 'package:adopte_un_matou/services/users_service.dart';
 import 'package:adopte_un_matou/src/pages/user_profile_page/widgets/user_roles_dialog.dart';
 import 'package:adopte_un_matou/src/provider/controller/app_user_controller.dart';
+import 'package:adopte_un_matou/src/provider/controller/users_controller.dart';
+import 'package:adopte_un_matou/src/shared/widgets/am_button.dart';
 import 'package:adopte_un_matou/src/shared/widgets/general/am_app_bar.dart';
+import 'package:adopte_un_matou/src/shared/widgets/general/am_status_message.dart';
 import 'package:adopte_un_matou/src/shared/widgets/inputs/am_textinput.dart';
 import 'package:adopte_un_matou/src/utils/screen_utils.dart';
 import 'package:adopte_un_matou/theme/palette.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,6 +29,10 @@ class UserProfilePage extends ConsumerStatefulWidget {
 class _UserProfilePageState extends ConsumerState<UserProfilePage> {
   late User _user;
   bool _isApplicationUser = false;
+
+  bool _isLoading = false;
+  bool _success = false;
+  String _statusMessage = '';
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -75,16 +84,25 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: ScreenUtils.instance.horizontalPadding),
-        child: SingleChildScrollView(
+        child: _isLoading ? const Center(child: CircularProgressIndicator(),) : SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (_statusMessage.isNotEmpty) ...{ 
+                AmStatusMessage(
+                  message: _statusMessage,
+                  type: _success ? AmStatusMessageType.success : AmStatusMessageType.error,
+                ),
+                const SizedBox(height: 24,),
+              },
               Flexible(child: _buildHeader()),
               const SizedBox(height: 24,),
               Text("Profil", style: Theme.of(context).textTheme.headline5,),
               const SizedBox(height: 24,),
-              Flexible(child: _buildForm())
+              Flexible(child: _buildForm()),
+              const SizedBox(height: 24,),
+              Flexible(child: _buildButtons())
             ],
           ),
         ),
@@ -235,13 +253,73 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
     );
   }
 
+  Widget _buildButtons() {
+    return Wrap(
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: 16, runSpacing: 16,
+      children: [
+        if (!_isApplicationUser)
+          AmButton(
+            text: "Annuler",
+            onPressed: () { Navigator.of(context).pop(); },
+          ),
+        AmButton(
+          text: "Valider",
+          onPressed: _submitModifications,
+        )
+      ],
+    );
+  }
+
   Future _submitModifications() async {
     if (!_formKey.currentState!.validate()) return;
+
+    setState(() {
+      _isLoading = true;
+      _statusMessage = '';
+      _success = false;
+    });
 
     _user = _user.copyWith(
       firstName: _firstNameTextController.text,
       lastName: _lastNameTextController.text,
       email: _emailTextController.text,
     );
+
+    try {
+      final String? authorization = ref.read(appUserControllerProvider).user?.authenticationHeader;
+
+      await UsersService.instance.updateUser(_user, authorization: authorization);
+
+      if (_isApplicationUser) {
+        ref.read(appUserControllerProvider.notifier).updateUser(_user);
+
+        setState(() {
+          _isLoading = false;
+          _success = true;
+          _statusMessage = "Votre profil à bien été modifié !";          
+        });
+      }
+      else {
+        ref.read(usersControllerProvider.notifier).updateUser(_user);
+
+        Navigator.of(context).pop();
+      }
+    }
+    on PlatformException catch(e) {
+      setState(() {
+        _isLoading = false;
+        _success = false;
+        _statusMessage = "Impossible de mettre à jour le profil ; ${e.code} ; ${e.message}";
+      });
+    }
+    on Exception catch(e) {
+      setState(() {
+        _isLoading = false;
+        _success = false;
+        _statusMessage = "Une erreur inconnue s'est produite : $e";   
+      });
+    }
   }
 }

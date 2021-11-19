@@ -11,7 +11,7 @@ class AppUserState {
     this.loadedAtStartup = false
   });
 
-  AppUserState copyWidth({
+  AppUserState copyWith({
     User? user,
     bool? loadedAtStartup,
   }) {

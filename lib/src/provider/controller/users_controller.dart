@@ -31,4 +31,14 @@ class UsersController extends StateNotifier<UsersState> {
       );
     }
   }
+
+  void updateUser(User user) {
+    if (user.id == null) return;
+
+    state.users.asData!.value[user.id!] = user;
+    state = state.copyWith(
+      users: state.users
+    );
+  }
+
 }

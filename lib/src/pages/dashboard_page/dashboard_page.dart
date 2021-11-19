@@ -105,7 +105,9 @@ class DashboardPage extends ConsumerWidget {
       DashboardCard(
         text: "Gérer les utilisateurs",
         catImage: "cat9", 
-        onTap: () {},
+        onTap: () {
+          onPageChanged(pageItems[AdminPages.users]!);
+        },
       ),
       DashboardCard(
         text: "Gérer les documents",
@@ -115,7 +117,9 @@ class DashboardPage extends ConsumerWidget {
       DashboardCard(
         text: "Gérer mon profil",
         catImage: "cat1", 
-        onTap: () {},
+        onTap: () {
+          onPageChanged(pageItems[AdminPages.profile]!);
+        },
       ),
       DashboardCard(
         text: "Supprimer mon compte",
