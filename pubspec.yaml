@@ -27,7 +27,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_feather_icons: ^2.0.0+1
-  flutter_riverpod: ^1.0.0-dev.9
+  flutter_riverpod: ^1.0.3
   google_fonts: ^2.1.0
   http: ^0.13.3
   intl: ^0.17.0

@@ -29,7 +29,7 @@ class CatsController extends StateNotifier<AdoptionCatsState> {
     }
     on Exception catch(e) {
       state = state.copyWidth(
-        cats: AsyncValue.error(e, previous: state.cats.asData)
+        cats: AsyncValue.error(e)
       );
     }
   }

@@ -233,8 +233,8 @@ class _ViewCatPageState extends ConsumerState<ViewCatPage> {
           image: data,
           fit: BoxFit.cover,
         ),
-        loading: (data) => const Center(child: CircularProgressIndicator(),),
-        error: (error, stackTrace, data) => const Center(child: Icon(FeatherIcons.alertCircle),)
+        loading: () => const Center(child: CircularProgressIndicator(),),
+        error: (error, stackTrace) => const Center(child: Icon(FeatherIcons.alertCircle),)
       );
 
     }

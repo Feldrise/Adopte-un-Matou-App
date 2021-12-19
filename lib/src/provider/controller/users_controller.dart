@@ -27,7 +27,7 @@ class UsersController extends StateNotifier<UsersState> {
     }
     on Exception catch(e) {
       state = state.copyWith(
-        users: AsyncValue.error(e, previous: state.users.asData)
+        users: AsyncValue.error(e)
       );
     }
   }

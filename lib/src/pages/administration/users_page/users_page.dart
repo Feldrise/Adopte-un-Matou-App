@@ -37,8 +37,8 @@ class UsersPage extends ConsumerWidget {
                     } 
                   ], 
                 ),
-                loading: (previous) => const Center(child: CircularProgressIndicator(),),
-                error: (error, stackTrace, previous) => AmStatusMessage(
+                loading: () => const Center(child: CircularProgressIndicator(),),
+                error: (error, stackTrace) => AmStatusMessage(
                   title: "Impossible de charger la liste",
                   message: "La liste des utilisateurs ne peut pas être chargé : $stackTrace",
                 )

@@ -27,8 +27,8 @@ class AddToAdoptedPage extends ConsumerWidget {
               }
             ],
           ),
-          loading: (previous) => const Center(child: CircularProgressIndicator(),),
-          error: (error, stackTrace, previous) => Center(
+          loading: () => const Center(child: CircularProgressIndicator(),),
+          error: (error, stackTrace) => Center(
             child: AmStatusMessage(
               title: "Erreur de chargement",
               message: "Impossible de charger les chats à adopter : $error",

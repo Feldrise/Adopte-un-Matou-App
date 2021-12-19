@@ -5,10 +5,11 @@ import 'package:adopte_un_matou/src/pages/adoptants/adoptants_main_page/widgets/
 import 'package:adopte_un_matou/src/pages/adoptions_page/adoptions_page.dart';
 import 'package:adopte_un_matou/src/pages/dashboard_page/dashboard_page.dart';
 import 'package:adopte_un_matou/src/pages/main_page/main_page.dart';
+import 'package:adopte_un_matou/src/pages/user_profile_page/user_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-enum AdoptantsPages { dashboard, adoption, adoptedCat, /* faq, infos, help, contact, profile */}
+enum AdoptantsPages { dashboard, adoption, adoptedCat, /* faq, infos, help, contact, */ profile }
 
 class AdoptantsMainPage extends StatelessWidget {
   AdoptantsMainPage({Key? key}) : super(key: key);
@@ -34,6 +35,11 @@ class AdoptantsMainPage extends StatelessWidget {
         title: "Les chats adoptés",
         icon: FeatherIcons.checkCircle
       ),
+      AdoptantsPages.profile: PageItem(
+        index: 6,
+        title: "Gérer le profil",
+        icon: FeatherIcons.settings
+      ),
     };
 
     final List<Widget> pages = [
@@ -51,6 +57,7 @@ class AdoptantsMainPage extends StatelessWidget {
       ),
       const AdoptionsPage(),
       const AdoptedCatsPage(),
+      const UserProfilePage(),
     ];
 
     return MainPage(

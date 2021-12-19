@@ -12,8 +12,8 @@ class UsersState {
       data: (data) {
         return AsyncValue.data(data.values.toList());
       },
-      loading: (previous) => const AsyncValue.loading(),
-      error: (error, stackTrace, previous) => AsyncValue.error(error, stackTrace: stackTrace)
+      loading: () => const AsyncValue.loading(),
+      error: (error, stackTrace) => AsyncValue.error(error, stackTrace: stackTrace)
     );
   }
 

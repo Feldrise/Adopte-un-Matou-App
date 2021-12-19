@@ -32,8 +32,8 @@ class ApplicationsPage extends ConsumerWidget {
                       ApplicationCard(application: application),
                   ], 
                 ),
-                loading: (previous) => const Center(child: CircularProgressIndicator(),),
-                error: (error, stackTrace, previous) => AmStatusMessage(
+                loading: () => const Center(child: CircularProgressIndicator(),),
+                error: (error, stackTrace) => AmStatusMessage(
                   title: "Impossible de charger la liste",
                   message: "La liste des candidatures ne peut pas être chargé : $stackTrace",
                 )

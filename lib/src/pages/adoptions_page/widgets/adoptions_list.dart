@@ -40,8 +40,8 @@ class AdoptionsList extends ConsumerWidget {
           ], 
         );
       },
-      loading: (data) => const Center(child: CircularProgressIndicator(),),
-      error: (error, stackTrace, data) => Align(
+      loading: () => const Center(child: CircularProgressIndicator(),),
+      error: (error, stackTrace) => Align(
         alignment: Alignment.topLeft,
         child: AmStatusMessage(
           title: "Erreur",

@@ -76,8 +76,8 @@ class ApplicationCard extends ConsumerWidget {
             )
           ],
         ),
-        loading: (previous) => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace, previous) => const Center(child: Text("Impossible de charger l'utilisateur de cette candidature"),)
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stackTrace) => const Center(child: Text("Impossible de charger l'utilisateur de cette candidature"),)
       )
     );
   }

@@ -1,6 +1,7 @@
 import 'package:adopte_un_matou/models/page_item.dart';
 import 'package:adopte_un_matou/models/user.dart';
 import 'package:adopte_un_matou/src/pages/administration/admin_main_page/admin_main_page.dart';
+import 'package:adopte_un_matou/src/pages/adoptants/adoptants_main_page/adoptants_main_page.dart';
 import 'package:adopte_un_matou/src/pages/application_follow_up/application_follow_up.dart';
 import 'package:adopte_un_matou/src/pages/dashboard_page/manage_adoptions_page/manage_adoptions_page.dart';
 import 'package:adopte_un_matou/src/pages/dashboard_page/widgets/dashboard_card.dart';
@@ -75,10 +76,29 @@ class DashboardPage extends ConsumerWidget {
                 );
               },
             ) : Container(),
-        loading: (previous) => const LinearProgressIndicator(), 
-        error: (error, stackTrace, previous) => Container(),
+        loading: () => const LinearProgressIndicator(), 
+        error: (error, stackTrace) => Container(),
       ),
 
+      DashboardCard(
+        text: "Se déconnecter",
+        catImage: "cat11", 
+        onTap: () {
+          ref.read(appUserControllerProvider.notifier).logout();
+        },
+      ),
+       DashboardCard(
+        text: "Gérer mon profil",
+        catImage: "cat1", 
+        onTap: () {
+          onPageChanged(pageItems[AdoptantsPages.profile]!);
+        },
+      ),
+      DashboardCard(
+        text: "Supprimer mon compte",
+        catImage: "cat2", 
+        onTap: () {},
+      ),
       DashboardCard(
         text: "Se déconnecter",
         catImage: "cat11", 

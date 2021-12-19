@@ -50,8 +50,8 @@ class _CatCardState extends ConsumerState<CatCard> {
                   child: ref.watch(widget.cat.image).image != null ? 
                     ref.watch(widget.cat.image).image!.when(
                       data: (data) => Image(image: data, fit: BoxFit.cover,),
-                      loading: (data) => Image.asset('assets/icons/kittyLoader2.gif'),
-                      error: (error, stackTrace, data) => const Center(child: Icon(FeatherIcons.alertCircle),),
+                      loading: () => Image.asset('assets/icons/kittyLoader2.gif'),
+                      error: (error, stackTrace) => const Center(child: Icon(FeatherIcons.alertCircle),),
                     ) :
                     Container()
                 ),

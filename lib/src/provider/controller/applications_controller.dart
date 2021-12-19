@@ -29,7 +29,7 @@ class ApplicationsController extends StateNotifier<ApplicationsState> {
     }
     on Exception catch(e) {
       state = state.copyWith(
-        applications: AsyncValue.error(e, previous: state.applications.asData)
+        applications: AsyncValue.error(e)
       );
     }
   }
@@ -48,7 +48,7 @@ class ApplicationsController extends StateNotifier<ApplicationsState> {
     }
     on Exception catch(e) {
       state = state.copyWith(
-       userApplication: AsyncValue.error(e, previous: state.userApplication.asData)
+       userApplication: AsyncValue.error(e)
       );
     }
   }

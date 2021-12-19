@@ -15,8 +15,8 @@ class AdoptionCatsState {
               cat 
         ]);
       },
-      loading: (data) => const AsyncValue.loading(),
-      error: (error, stackTrace, data) => AsyncValue.error(error, stackTrace: stackTrace)
+      loading: () => const AsyncValue.loading(),
+      error: (error, stackTrace) => AsyncValue.error(error, stackTrace: stackTrace)
     );
   }
 
@@ -29,8 +29,8 @@ class AdoptionCatsState {
               cat 
         ]);
       },
-      loading: (data) => const AsyncValue.loading(),
-      error: (error, stackTrace, data) => AsyncValue.error(error, stackTrace: stackTrace)
+      loading: () => const AsyncValue.loading(),
+      error: (error, stackTrace) => AsyncValue.error(error, stackTrace: stackTrace)
     );
   }
 

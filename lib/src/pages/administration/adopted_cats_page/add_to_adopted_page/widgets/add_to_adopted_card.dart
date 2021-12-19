@@ -49,8 +49,8 @@ class _AddToAdoptedCartState extends ConsumerState<AddToAdoptedCart> {
                   color: Palette.colorGrey2,
                   child: ref.watch(widget.cat.image).image!.when(
                     data: (data) => Image(image: data, fit: BoxFit.cover,),
-                    loading: (previous) => Image.asset("assets/icons/kittyLoader2.gif", fit: BoxFit.cover,),
-                    error: (error, stackTrace, previous) => const Center(child: Icon(FeatherIcons.alertCircle),),
+                    loading: () => Image.asset("assets/icons/kittyLoader2.gif", fit: BoxFit.cover,),
+                    error: (error, stackTrace) => const Center(child: Icon(FeatherIcons.alertCircle),),
                   )
                 ),
               ),

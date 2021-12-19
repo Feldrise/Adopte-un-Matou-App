@@ -1,5 +1,4 @@
 import 'package:adopte_un_matou/models/cat.dart';
-import 'package:adopte_un_matou/presentation/a_u_m_icons_icons.dart';
 import 'package:adopte_un_matou/theme/palette.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
