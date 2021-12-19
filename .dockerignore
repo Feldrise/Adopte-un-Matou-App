@@ -1,0 +1,6 @@
+.idea/
+.vscode
+build/
+.dart_tool/
+.git/
+graphics/
